@@ -125,10 +125,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\DirectoryTree.h" />
+    <ClInclude Include="src\FileSystem.h" />
     <ClInclude Include="src\Includes.h" />
+    <ClInclude Include="src\Node.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="files\Filenames.txt" />
+    <Text Include="files\Foldernames.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
