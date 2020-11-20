@@ -8,7 +8,7 @@ namespace FS
 	static std::vector<std::string> randomFilenames;
 	static std::vector<std::string> randomFoldernames;
 
-	std::string readFile(std::string name, bool cache) {
+	std::string readFile(std::string name, bool cache, bool skipEnters = false) {
 		std::fstream stream;
 		if (cache) {
 			if (cachedFile.find(name) != cachedFile.end()) {
@@ -28,7 +28,10 @@ namespace FS
 
 		std::string line;
 		while (getline(stream, line)) {
-			buffer += line + '\n';
+			buffer += line;
+			if (!skipEnters) {
+				buffer += '\n';
+			}
 		}
 
 		stream.close();

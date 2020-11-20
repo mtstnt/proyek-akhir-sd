@@ -38,9 +38,16 @@
     <ClInclude Include="src\FileSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ConsoleFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CommandParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="files\Filenames.txt" />
     <Text Include="files\Foldernames.txt" />
+    <Text Include="files\Title.txt" />
   </ItemGroup>
 </Project>

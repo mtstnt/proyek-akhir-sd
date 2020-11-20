@@ -5,9 +5,11 @@
 #include <vector>
 #include <unordered_map>
 #include <sstream>
-#include <stack>
+#include <queue>
 #include <ctime>
 #include <fstream>
+#include <functional>
+#include <conio.h>
 
 #include <SFML/Audio.hpp>
 

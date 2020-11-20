@@ -3,21 +3,29 @@
 #include "FileSystem.h"
 #include "DirectoryTree.h"
 
+#include "CommandParser.h"
+
 App::App()
 {
 }
 
 void App::run()
 {
-	DirectoryTree tree(5);
+	std::string title = FS::readFile("files/Title.txt", false);
+
+	Console::startHandle();
+	Console::setColor(2);
+
+	std::cout << title << std::endl;
+
+	/*Console::setColor(9);
+	DirectoryTree tree(15);
 	tree.random();
-	tree.dfs();
+	tree.dfs();*/
 
-	//while (isRunning) {
-	//	// Display response
+	std::cout << "Start playing?\n";
+	getch();
 
-	//	// Ask for input
-
-	//	// Compute command
-	//}
+	std::string input;
+	getline(std::cin, input);
 }

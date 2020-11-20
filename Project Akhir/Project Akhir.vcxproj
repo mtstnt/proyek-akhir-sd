@@ -130,6 +130,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\CommandParser.h" />
+    <ClInclude Include="src\ConsoleFunctions.h" />
     <ClInclude Include="src\DirectoryTree.h" />
     <ClInclude Include="src\FileSystem.h" />
     <ClInclude Include="src\Includes.h" />
@@ -138,6 +140,7 @@
   <ItemGroup>
     <Text Include="files\Filenames.txt" />
     <Text Include="files\Foldernames.txt" />
+    <Text Include="files\Title.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

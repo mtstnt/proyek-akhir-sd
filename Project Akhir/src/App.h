@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Includes.h"
+#include "ConsoleFunctions.h"
 
 class App {
 

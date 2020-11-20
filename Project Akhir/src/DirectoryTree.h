@@ -12,19 +12,6 @@ private:
 	int maxLevel;
 	int maxElements = 10;
 
-public:
-	DirectoryTree(int maxLevel) : maxLevel (maxLevel) {
-	
-		root = new Directory("root");
-	}
-
-	void random() 
-	{
-		FS::loadRandomFiles();
-		Node* temp = root;
-		populate(1, root);
-	}
-
 	void populate(int level, Node* now) {
 		if (level == maxLevel) {
 			return;
@@ -52,18 +39,10 @@ public:
 		}
 	}
 
-	void dfs() {
-		display(root, 1);
-
-		std::cout << "=========\n";
-
-		std::cout << root->getChildren().size() << "\n";
-	}
-
 	void display(Node* now, int level) {
 
 		for (int i = 1; i < level; i++) {
-			std::cout << "\t";
+			std::cout << "----";
 		}
 		std::cout << now->getName() << std::endl;
 
@@ -73,10 +52,36 @@ public:
 
 		Directory* n = (Directory*)now;
 
-		for (int i = 0; i < n->getChildren().size(); i++) 
+		for (int i = 0; i < n->getChildren().size(); i++)
 		{
 			display(n->getChildren()[i], level + 1);
 		}
+	}
+
+public:
+	DirectoryTree(int maxLevel) : maxLevel (maxLevel) {
+	
+		root = new Directory("root");
+	}
+
+	void random() 
+	{
+		FS::loadRandomFiles();
+		Node* temp = root;
+		populate(1, root);
+	}
+
+
+	void dfs() {
+		display(root, 1);
+
+		std::cout << "=========\n";
+
+		std::cout << root->getChildren().size() << "\n";
+	}
+
+	Node* getRoot() {
+		return root;
 	}
 
 };
