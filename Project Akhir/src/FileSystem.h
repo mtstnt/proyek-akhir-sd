@@ -2,11 +2,23 @@
 
 #include "Includes.h"
 
-namespace FS
+class FileSystem
 {
-	static std::unordered_map<std::string, std::string> cachedFile;
-	static std::vector<std::string> randomFilenames;
-	static std::vector<std::string> randomFoldernames;
+private:
+	std::unordered_map<std::string, std::string> cachedFile;
+	std::vector<std::string> randomFilenames;
+	std::vector<std::string> randomFoldernames;
+
+	static FileSystem* instance;
+
+public:
+
+	static FileSystem& get() {
+		if (instance == nullptr) {
+			instance = new FileSystem();
+		}
+		return *instance;
+	}
 
 	std::string readFile(std::string name, bool cache, bool skipEnters = false) {
 		std::fstream stream;
@@ -96,3 +108,4 @@ namespace FS
 	
 
 };
+

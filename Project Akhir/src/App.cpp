@@ -5,27 +5,42 @@
 
 #include "CommandParser.h"
 
+// State includes disini
+#include "MainMenuState.h"
+
 App::App()
 {
+	m_data->machine.AddState(std::make_unique<FS::MainMenuState>(m_data));
 }
 
 void App::run()
 {
-	std::string title = FS::readFile("files/Title.txt", false);
+	//std::string title = FileSystem::get().readFile("files/Title.txt", false);
 
-	Console::startHandle();
-	Console::setColor(2);
+	//Console::get().setColor(2);
 
-	std::cout << title << std::endl;
+	//std::cout << title << std::endl;
 
-	/*Console::setColor(9);
-	DirectoryTree tree(15);
-	tree.random();
-	tree.dfs();*/
+	//*Console::setColor(9);
+	//DirectoryTree tree(15);
+	//tree.random();
+	//tree.dfs();*/
 
-	std::cout << "Start playing?\n";
-	getch();
+	//std::cout << "Start playing?\n";
+	//getch();
 
-	std::string input;
-	getline(std::cin, input);
+	//std::string input;
+	//getline(std::cin, input);
+
+	m_data->musicPlayer.play();
+
+	while (isRunning) 
+	{
+		m_data->machine.ProcessStateChanges();
+
+		system("Cls");
+		m_data->machine.GetActiveState()->VUpdate(0);
+
+		std::cin.get();
+	}
 }

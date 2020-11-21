@@ -2,12 +2,31 @@
 
 #include "Includes.h"
 
-// Cara utk setup warna-warna di console
-
-namespace Console {
-
+class Console 
+{
+private:
 	HANDLE hConsole;
 	bool isInitialized = false;
+
+	static Console* instance;
+
+	Console() = default;
+
+public:
+
+	static Console& get() 
+	{
+		if (instance == nullptr) {
+			instance = new Console();
+		}
+
+		return *instance;
+	}
+
+	Console& operator=(Console& ref) {
+		return *instance;
+	}
+
 	void startHandle()
 	{
 		hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -24,7 +43,8 @@ namespace Console {
 		SetConsoleTextAttribute(hConsole, colorIndex);
 	}
 
-	void setConsoleSize(int width, int height) {
+	void setConsoleSize(int width, int height) 
+	{
 #ifdef _WIN32
 		HWND console = GetConsoleWindow();
 		RECT ConsoleRect;
@@ -32,4 +52,5 @@ namespace Console {
 		MoveWindow(console, ConsoleRect.left, ConsoleRect.top, width, height, TRUE);
 #endif // _WIN32
 	}
-}
+};
+

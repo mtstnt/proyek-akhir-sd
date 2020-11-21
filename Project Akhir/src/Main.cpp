@@ -6,7 +6,7 @@ int main()
 	srand(time(NULL));
 
 	// Setup console window size, position
-	Console::setConsoleSize(1000, 600);
+	Console::get().setConsoleSize(1000, 600);
 
 	App app;
 	app.run();

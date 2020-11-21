@@ -29,10 +29,10 @@ private:
 		int childCount = rand() % (maxElements - 3) + 3;
 		for (int i = 0; i < childCount; i++) {
 			if (binaryRandom()) {
-				dir->addChild(new Directory(FS::getRandomFoldername()));
+				dir->addChild(new Directory(FileSystem::get().getRandomFoldername()));
 			}
 			else {
-				dir->addChild(new File(FS::getRandomFilename()));
+				dir->addChild(new File(FileSystem::get().getRandomFilename()));
 			}
 
 			populate(level + 1, dir->getChildren().at(i));
@@ -66,7 +66,7 @@ public:
 
 	void random() 
 	{
-		FS::loadRandomFiles();
+		FileSystem::get().loadRandomFiles();
 		Node* temp = root;
 		populate(1, root);
 	}

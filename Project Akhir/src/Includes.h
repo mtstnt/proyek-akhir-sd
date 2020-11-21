@@ -11,8 +11,6 @@
 #include <functional>
 #include <conio.h>
 
-#include <SFML/Audio.hpp>
-
 #ifdef _WIN32
 
 #include <Windows.h>
