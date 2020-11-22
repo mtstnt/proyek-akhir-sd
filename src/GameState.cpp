@@ -33,7 +33,7 @@ void FS::GameState::VUpdate(float dt)
 	std::cout << prompt << "\n";
 
 	// Ask for input
-	traversePath();
+	writePath();
 	std::cout << "$";
 
 	getline(std::cin, input);

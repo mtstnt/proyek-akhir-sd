@@ -30,10 +30,8 @@ namespace FS
 		virtual void VPause();
 		virtual void VExit();
 
-		void traversePath() {
-			std::vector<std::string> printablePath;
-			printablePath.resize(data.currentPath.size());
-
+		void writePath() 
+		{
 			for (int i = 0; i < data.currentPath.size(); i++) {
 				std::cout << data.currentPath.get(i);
 				if (i != data.currentPath.size() - 1) {
