@@ -9,8 +9,11 @@ using namespace std;
 
 class virus : public Node
 {
-private:
+protected:
 	int size;
+	tools t;
+	string loc;
+	bool turn;
 
 public:
 	virus() = default;
