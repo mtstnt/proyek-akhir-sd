@@ -68,17 +68,3 @@ public:
 		return Type::File;
 	}
 };
-
-class Virus : public Node
-{
-private:
-	int size;
-
-public:
-	Virus() = default;
-	Virus(std::string name) : Node(name) {}
-
-	Type checkType() override {
-		return Type::Virus;
-	}
-};

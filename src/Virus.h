@@ -2,15 +2,24 @@
 #include"Tools.h"
 #include<iostream>
 
+#include "Node.h"
+
 using namespace std;
 
-class virus {
-protected:
-	tools t;
-	string loc;
-	bool turn;
+
+class virus : public Node
+{
+private:
+	int size;
+
 public:
-	virus();
+	virus() = default;
+	virus(std::string name) : Node(name) {}
+
+	Type checkType() override {
+		return Type::Virus;
+	}
+
 	virtual void moveToFolder() = 0;
 	virtual void deleteFile() = 0;
 	virtual void endTurn() = 0;
