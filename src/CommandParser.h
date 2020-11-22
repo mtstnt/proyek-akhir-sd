@@ -1,25 +1,26 @@
 #pragma once
 
 #include "Includes.h"
+#include "GameInfo.h"
+#include "Commands.h"
 
 class CommandParser
 {
 private:
-	std::unordered_map<std::string, std::function<void()>> keywords;
-	std::queue<std::string> parsingQueue;
+	std::unique_ptr<BaseCommand> command;
 
 public:
-	CommandParser() 
+	CommandParser() = default;
+
+	void parse(GameInfo& info, std::string commands)
 	{
 
-	}
-
-	void parse(std::string commands) 
-	{
+		std::queue<std::string> parsingQueue;
 		std::string temp = "";
-		for (int i = 0; i <= commands.length(); i++) 
+
+		for (int i = 0; i <= commands.length(); i++)
 		{
-			if (commands[i] == ' ') {
+			if (commands[i] == ' ' || i == commands.length()) {
 				parsingQueue.push(temp);
 				temp.clear();
 			}
@@ -28,18 +29,32 @@ public:
 			}
 		}
 
-		while (!parsingQueue.empty())
-		{
-			std::string currentKeyword = parsingQueue.front();
+		// Coba param 1 kata aja dlu
+		std::string currentKeyword = parsingQueue.front();
 
-			parsingQueue.pop();
+		parsingQueue.pop();
 
-			// Checking
+		// Checking
+		if (currentKeyword == "ls") {
+			command = std::make_unique<ListDirectory>(info);
+			return;
+		}
+		if (currentKeyword == "cd") {
+			command = std::make_unique<GotoDirectory>(info);
+			command->parse(commands);
+			return;
 		}
 
-		
+		//command = std::make_unique<NotFound>();
+
 	}
 
-	
+	std::string response() {
+		if (command == nullptr) {
+			return "We don't know that command!";
+		}
+		return command->getResponse();
+	}
+
 
 };

@@ -14,6 +14,7 @@ class Node
 protected:
 	Node* parent;
 	std::string name;
+	int level;
 
 public:
 	Node() = default;
@@ -21,8 +22,24 @@ public:
 
 	virtual Type checkType() = 0;
 	
-	const std::string getName() {
+	std::string getName() {
 		return name;
+	}
+
+	void setParent(Node* parent) {
+		this->parent = parent;
+	}
+
+	void setLevel(int level) {
+		this->level = level;
+	}
+
+	Node* getParent() {
+		return this->parent;
+	}
+
+	int getLevel() {
+		return level;
 	}
 };
 
@@ -39,8 +56,9 @@ public:
 		return Type::Directory;
 	}
 
-	void addChild(Node* child) {
+	Node* addChild(Node* child) {
 		children.push_back(child);
+		return children.back();
 	}
 
 	void deleteChild(int index) {

@@ -10,7 +10,7 @@ private:
 	Directory* root;
 	Node* current;
 	int maxLevel;
-	int maxElements = 10;
+	int maxElements = 3;
 
 	void populate(int level, Node* now) {
 		if (level == maxLevel) {
@@ -26,13 +26,17 @@ private:
 			return;
 		}
 
-		int childCount = rand() % (maxElements - 3) + 3;
+		int childCount = rand() % (maxElements) + 1;
 		for (int i = 0; i < childCount; i++) {
 			if (binaryRandom()) {
-				dir->addChild(new Directory(FileSystem::get().getRandomFoldername()));
+				Node* t = dir->addChild(new Directory(FileSystem::get().getRandomFoldername()));
+				t->setParent(now);
+				t->setLevel(level);
 			}
 			else {
-				dir->addChild(new File(FileSystem::get().getRandomFilename()));
+				Node* t = dir->addChild(new File(FileSystem::get().getRandomFilename()));
+				t->setParent(now);
+				t->setLevel(level);
 			}
 
 			populate(level + 1, dir->getChildren().at(i));
@@ -40,6 +44,10 @@ private:
 	}
 
 	void display(Node* now, int level) {
+
+		if (now == nullptr) {
+			return;
+		}
 
 		for (int i = 1; i < level; i++) {
 			std::cout << "----";
@@ -59,25 +67,34 @@ private:
 	}
 
 public:
+	DirectoryTree() 
+	{
+		maxLevel = 10;
+		root = new Directory("root");
+	}
+
 	DirectoryTree(int maxLevel) : maxLevel (maxLevel) {
 	
 		root = new Directory("root");
 	}
 
-	void random() 
+	void setMaxLevel(int level) {
+		this->maxLevel = level;
+	}
+
+	void initializeTree() 
 	{
 		FileSystem::get().loadRandomFiles();
-		Node* temp = root;
+		root->setLevel(1);
 		populate(1, root);
 	}
 
+	void dfs(Node* start = nullptr) {
+		if (start == nullptr) {
+			start = root;
+		}
 
-	void dfs() {
-		display(root, 1);
-
-		std::cout << "=========\n";
-
-		std::cout << root->getChildren().size() << "\n";
+		display(start, start->getLevel());
 	}
 
 	Node* getRoot() {

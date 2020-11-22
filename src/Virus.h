@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 class virus : public Node
 {
 protected:
@@ -16,7 +15,7 @@ protected:
 	bool turn;
 
 public:
-	virus() = default;
+	virus();
 	virus(std::string name) : Node(name) {}
 
 	Type checkType() override {
