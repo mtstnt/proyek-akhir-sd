@@ -18,7 +18,10 @@ namespace FS
 		std::string input;
 
 		// List virus
-
+		//Nov 29
+		V1 virus1;
+		V2 virus2;
+		V3 virus3;
 	public:
 		GameState(GameDataRef data);
 		~GameState();
