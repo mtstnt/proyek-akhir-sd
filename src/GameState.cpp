@@ -24,6 +24,13 @@ void FS::GameState::VInit()
 	data.currentNode = root;
 	data.currentPath.push("root");
 
+	Directory* rootDir = root->as<Directory*>();
+	for (auto& a : root->as<Directory*>()->getChildren()) {
+		std::cout << a->getName() << std::endl;
+	}
+
+	std::cout << "=====================\n";
+
 	// Setup tools.
 	data.tools["detector"] = new ToolDetectVirus(data);
 	// data.tools["isolate"] = new ToolIsolate(data);

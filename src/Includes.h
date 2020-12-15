@@ -10,6 +10,7 @@
 #include <fstream>
 #include <functional>
 #include <conio.h>
+#include <stack>
 
 #ifdef _WIN32
 

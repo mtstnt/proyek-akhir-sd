@@ -1,7 +1,5 @@
 #pragma once
 #include"Tools.h"
-#include<iostream>
-
 #include "Node.h"
 
 using namespace std;
@@ -11,7 +9,7 @@ class virus : public Node
 protected:
 	int id = 0;
 	int size;
-	tools t;
+	//tools t;
 	string loc;
 	bool turn;
 

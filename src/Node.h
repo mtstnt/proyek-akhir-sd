@@ -41,6 +41,12 @@ public:
 	int getLevel() {
 		return level;
 	}
+
+	// Cast object to something else (Syntax sugar)
+	template<typename T>
+	T as() {
+		return (T)this;
+	}
 };
 
 class Directory : public Node
@@ -70,6 +76,7 @@ public:
 		return children;
 	}
 
+	
 };
 
 class File : public Node
