@@ -8,6 +8,7 @@ FS::GameState::GameState(GameDataRef data) : m_data(data) {}
 
 FS::GameState::~GameState()
 {
+	delete vrs;
 }
 
 void FS::GameState::VInit()
@@ -24,12 +25,20 @@ void FS::GameState::VInit()
 	data.currentNode = root;
 	data.currentPath.push("root");
 
+	//VIRUS
+	vrs = new virus("Corona", 1);
+	root->as<Directory*>()->addChild(vrs);
+	vrs->setParent(root);
+	vrs->moveToFolder();
+	//VIRUS
+
 	// Setup tools.
 	data.tools["detector"] = new ToolDetectVirus(data);
 	// data.tools["isolate"] = new ToolIsolate(data);
 
 	// Bersihin stdin dari enter yang dari cinnya menu.
 	getchar();
+	
 }
 
 void FS::GameState::VUpdate(float dt)
@@ -54,6 +63,8 @@ void FS::GameState::VUpdate(float dt)
 
 	// Response dari eksekusi command dari parser dikirimkan ke prompt.
 	prompt = parser.response();
+
+	vrs->updateVirus();
 }
 
 void FS::GameState::VResume() {}
