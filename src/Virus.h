@@ -9,6 +9,7 @@ using namespace std;
 class virus : public Node
 {
 protected:
+	int id = 0;
 	int size;
 	tools t;
 	string loc;
@@ -16,43 +17,40 @@ protected:
 
 public:
 	virus();
-	virus(std::string name) : Node(name) {}
+	virus(std::string name, int ID) : Node(name) { }
 
 	Type checkType() override {
 		return Type::Virus;
 	}
 
-	virtual void moveToFolder() = 0;
-	virtual void deleteFile() = 0;
-	virtual void endTurn() = 0;
-};
-
-class V1 : protected virus {
-protected:
-
-public:
-	V1();
 	virtual void moveToFolder();
 	virtual void deleteFile();
-	virtual void endTurn();
+	void updateVirus();
 };
 
-class V2 : protected virus {
-protected:
-
-public:
-	V2();
-	virtual void moveToFolder();
-	virtual void deleteFile();
-	virtual void endTurn();
-};
-
-class V3 : protected virus {
-protected:
-
-public:
-	V3();
-	virtual void moveToFolder();
-	virtual void deleteFile();
-	virtual void endTurn();
-};
+//class V1 : protected virus : virus(ID) {
+//protected:
+//
+//public:
+//	V1();
+//	void moveToFolder();
+//	void deleteFile();
+//};
+//
+//class V2 : protected virus {
+//protected:
+//
+//public:
+//	V2();
+//	void moveToFolder();
+//	void deleteFile();
+//};
+//
+//class V3 : protected virus {
+//protected:
+//
+//public:
+//	V3();
+//	void moveToFolder();
+//	void deleteFile();
+//};
