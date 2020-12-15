@@ -39,7 +39,13 @@ void App::run()
 	while (isRunning) 
 	{
 		m_data->machine.ProcessStateChanges();
+	
+		if (m_data->machine.StackEmpty()) {
+			isRunning = false;
+		}
+		else {
+			m_data->machine.GetActiveState()->VUpdate(0);
+		}
 
-		m_data->machine.GetActiveState()->VUpdate(0);
 	}
 }

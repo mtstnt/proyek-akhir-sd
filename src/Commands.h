@@ -2,6 +2,14 @@
 #include "Includes.h"
 
 #include "GameInfo.h"
+#include "Utils.h"
+#include "Tools.h"
+
+// Cara kerja class anakan e BaseCommand:
+// Setiap class ini menjalankan beberapa fungsi. Misalnya utk display directory dia panggil class ListDirectory, utk pergi pake class GotoDirectory.
+
+// Utk case tools, cuma menjalankan tools yang ada, ke directory yang dikirim via parameter.
+// Hasil eksekusinya dimasukin ke dlm string yang direturn via getResponse();
 
 // Commands
 class BaseCommand
@@ -11,28 +19,13 @@ protected:
 
 	GameInfo& data;
 
-	void getParams(const std::string& param) 
-	{
-		std::string singleParam;
-		for (int i = 0; i <= param.length(); i++) 
-		{
-			if (param[i] == ' ' || i == param.length()) {
-				params.push_back(singleParam);
-				singleParam.clear();
-			}
-			else {
-				singleParam += param[i];
-			}
-		}
-	}
-
 public:
 
 	BaseCommand(GameInfo& data) : data(data) {}
 	
 	virtual void parse(const std::string& paramString) 
 	{
-		getParams(paramString);
+		params = Utils::split(paramString);
 	}
 
 	virtual std::string getResponse() = 0;
@@ -66,7 +59,7 @@ public:
 class GotoDirectory : public BaseCommand
 {
 private:
-	std::string responseString;
+	std::string response;
 
 public:
 	GotoDirectory(GameInfo& data) : BaseCommand(data) {}
@@ -75,7 +68,7 @@ public:
 		BaseCommand::parse(params);
 
 		if (params.size() <= 1) {
-			responseString = "";
+			response = "";
 			return;
 		}
 
@@ -85,7 +78,7 @@ public:
 				data.currentPath.pop();
 			}
 			else {
-				responseString = "Already at root!";
+				response = "Already at root!";
 			}
 		}
 		else {
@@ -101,7 +94,7 @@ public:
 			}
 
 			if (next == nullptr) {
-				responseString = "Cannot find " + this->params[1];
+				response = "Cannot find " + this->params[1];
 				return;
 			}
 
@@ -111,6 +104,45 @@ public:
 	}
 
 	std::string getResponse() override {
-		return responseString;
+		return response;
 	}
+};
+
+class UseTool : public BaseCommand
+{
+private:
+	std::string response;
+public:
+	UseTool(GameInfo& info) : BaseCommand(info) {}
+
+	void parse(const std::string& paramString) override
+	{
+		// CommandParams[1] => toolname
+		// CommandParams[2] => tooltarget
+		// The rest? DISCARD
+		BaseCommand::parse(paramString);
+
+		if (params.size() == 1) {
+			// List all available tools
+			response = "Tools available: \n";
+			for (auto& x : data.tools) {
+				response += x.first;
+			}
+			return;
+		}
+
+		if (params[1] == "" || params[1] == " ") {
+			// List all available tools
+			response = "Tools available: \n";
+			for (auto& x : data.tools) {
+				response += x.first;
+			}
+			return;
+		}
+	}
+
+	std::string getResponse() override {
+		return response;
+	}
+
 };

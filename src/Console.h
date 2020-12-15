@@ -2,6 +2,8 @@
 
 #include "Includes.h"
 
+// Class utk ngatur warna console, ukuran console, posisi cursor, dll.
+// Ditambahi nanti ae.
 class Console 
 {
 private:

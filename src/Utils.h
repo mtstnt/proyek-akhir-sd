@@ -12,4 +12,21 @@ namespace Utils
 			return this->c[i];
 		}
 	};
+
+	inline std::vector<std::string> split(const std::string& str)
+	{
+		std::vector<std::string> splitResults;
+		std::string word;
+		for (int i = 0; i <= str.length(); i++)
+		{
+			if (str[i] == ' ' || i == str.length()) {
+				splitResults.push_back(word);
+				word.clear();
+			}
+			else {
+				word += str[i];
+			}
+		}
+		return splitResults;
+	}
 }

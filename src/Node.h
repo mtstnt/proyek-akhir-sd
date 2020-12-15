@@ -49,7 +49,7 @@ private:
 	std::vector<Node*> children;
 
 public:
-	Directory();
+	Directory() = default;
 	Directory(std::string name) : Node(name) {}
 
 	Type checkType() override {

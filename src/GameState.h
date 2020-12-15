@@ -9,15 +9,20 @@ namespace FS
 	class GameState : public IState
 	{
 	private:
+		// State management stuff
 		GameDataRef m_data;
+
+		// Data yang dikirimkan ke lain-lain utk diproses
 		GameInfo data;
+
+		// Object utk parse commands.
 		CommandParser parser;
 
 		// Prompt temporary storage
 		std::string prompt;
 		std::string input;
 
-		// List virus
+		// List virus TODO
 
 	public:
 		GameState(GameDataRef data);

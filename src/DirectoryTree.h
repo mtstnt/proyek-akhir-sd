@@ -97,8 +97,10 @@ public:
 		display(start, start->getLevel());
 	}
 
+	// Mungkin 1 1nya yang perlu dipake diluar cuma ini.
+	// Bisa dipake utk travel. Harus di cast ke Directory* dulu. 
+	// Bisa pake dynamic_cast<Directory*>(node) => Klo null brarti salah. Klo gk brarti bisa dicast.
 	Node* getRoot() {
 		return root;
 	}
-
 };

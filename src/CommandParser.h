@@ -44,6 +44,11 @@ public:
 			command->parse(commands);
 			return;
 		}
+		if (currentKeyword == "tools") {
+			command = std::make_unique<UseTool>(info);
+			command->parse(commands);
+			return;
+		}
 
 		//command = std::make_unique<NotFound>();
 
