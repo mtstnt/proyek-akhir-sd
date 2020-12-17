@@ -6,44 +6,37 @@ virus::virus() {
 	
 }
 void virus::moveToFolder() {
-
+	auto sibling = ((Directory*)this->parent)->getChildren();
+	if (sibling.size() == 1)
+	{
+		
+	}
 }
 void virus::deleteFile() {//manggil deleteChild()
-	((Directory*)this->parent)->deleteChild(rand() % 9);
+	int random = rand() % ((Directory*)this->parent)->getChildren().size();
+	//TBC
+	while (1)
+	{
+		if (random == id)
+		{
+			continue;
+		}
+		else
+		{
+			break;
+		}
+	}
+	//Kalau yg kedelete parent child nya gimana?
+	((Directory*)this->parent)->deleteChild(random);
 }
 void virus::updateVirus() {
-
+	//changeName();
 }
 
-//// virus jenis 1
-//V1::V1() {
-//
-//}
-//void V1::moveToFolder() {
-//
-//}
-//void V1::deleteFile() {
-//
-//}
-//
-//// virus jenis 2
-//V2::V2() {
-//
-//}
-//void V2::moveToFolder() {
-//
-//}
-//void V2::deleteFile() {
-//
-//}
-//
-//// virus jenis 2
-//V3::V3() {
-//
-//}
-//void V3::moveToFolder() {
-//
-//}
-//void V3::deleteFile() {
-//
-//}
+void virus::changeName() {
+	this->name = "Bobi";
+}
+
+void virus::changeFilename()
+{
+}

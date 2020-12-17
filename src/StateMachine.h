@@ -1,8 +1,10 @@
 #pragma once
 #include <memory>
 #include <stack>
+#include <iostream>
 
 #include "IState.h"
+
 
 namespace FS
 {

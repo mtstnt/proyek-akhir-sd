@@ -8,6 +8,7 @@ FS::GameState::GameState(GameDataRef data) : m_data(data) {}
 
 FS::GameState::~GameState()
 {
+	
 }
 
 void FS::GameState::VInit()
@@ -24,12 +25,33 @@ void FS::GameState::VInit()
 	data.currentNode = root;
 	data.currentPath.push("root");
 
+	//VIRUS
+	vrs = new virus("Corona", 1);
+	root->as<Directory*>()->addChild(vrs);
+	vrs->setParent(root);
+	vrs->moveToFolder();
+	//VIRUS
+
 	// Setup tools.
 	data.tools["detector"] = new ToolDetectVirus(data);
 	// data.tools["isolate"] = new ToolIsolate(data);
 
 	// Bersihin stdin dari enter yang dari cinnya menu.
 	getchar();
+
+	/*auto vec = root->as<Directory*>()->getChildren();
+
+	for (int i = 0; i < vec.size(); i++)
+	{
+		if (vec.at(i)->getName() == "Corona")
+		{
+			root->as<Directory*>()->deleteChild(i);
+			break;
+		}
+	}*/
+	
+
+	//std::cout << "Virus deleted";
 }
 
 void FS::GameState::VUpdate(float dt)
@@ -54,6 +76,29 @@ void FS::GameState::VUpdate(float dt)
 
 	// Response dari eksekusi command dari parser dikirimkan ke prompt.
 	prompt = parser.response();
+
+	try
+	{
+		vrs->getName();
+	}
+	catch (...)
+	{
+		VExit();
+	}
+
+	if (vrs == nullptr)
+	{
+		VExit();
+	}
+	else
+	{
+		
+		std::cout << "Virus Mutating"  << vrs << std::endl;
+		vrs->updateVirus();
+	}
+	
+
+	
 }
 
 void FS::GameState::VResume() {}
@@ -62,5 +107,6 @@ void FS::GameState::VPause() {}
 
 void FS::GameState::VExit()
 {
+	//std::cout << "exiting" << std::endl;
 	m_data->machine.RemoveState();
 }

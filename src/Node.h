@@ -41,6 +41,11 @@ public:
 	int getLevel() {
 		return level;
 	}
+
+	template<typename T>
+	T as() {
+		return (T)this;
+	}
 };
 
 class Directory : public Node
@@ -66,7 +71,7 @@ public:
 		children.erase(children.begin() + index);
 	}
 
-	const std::vector<Node*>& getChildren() const {
+	std::vector<Node*>& getChildren()  {
 		return children;
 	}
 

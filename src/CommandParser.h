@@ -49,7 +49,16 @@ public:
 			command->parse(commands);
 			return;
 		}
-
+		if (currentKeyword == "rm") {
+			command = std::make_unique<Remove>(info);
+			command->parse(commands);
+			return;
+		}
+		if (currentKeyword == "?" || currentKeyword == "help") {
+			command = std::make_unique<Help>(info);
+			command->parse(commands);
+			return;
+		}
 		//command = std::make_unique<NotFound>();
 
 	}

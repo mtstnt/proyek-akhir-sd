@@ -10,6 +10,8 @@
 #include <fstream>
 #include <functional>
 #include <conio.h>
+#include <stack>
+#pragma comment(lib, "Winmm.lib")
 
 #ifdef _WIN32
 
