@@ -29,4 +29,14 @@ namespace Utils
 		}
 		return splitResults;
 	}
+
+	inline bool isDistinct(Directory* dir, std::string name) {
+		auto& ref = dir->getChildren();
+		for (Node* n : ref) {
+			if (n->getName() == name) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

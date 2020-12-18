@@ -11,6 +11,7 @@
 #include <functional>
 #include <conio.h>
 #include <stack>
+#include <assert.h>
 #pragma comment(lib, "Winmm.lib")
 
 #ifdef _WIN32
@@ -21,4 +22,8 @@
 
 inline bool binaryRandom() {
 	return rand() % 2;
+}
+
+inline int randomize(int total) {
+	return rand() % total;
 }

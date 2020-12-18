@@ -71,8 +71,28 @@ public:
 		children.erase(children.begin() + index);
 	}
 
+	void deleteChild(Node* node) {
+		for (int i = 0; i < children.size(); i++) {
+			if (children[i] == node) {
+				children.erase(children.begin() + i);
+				return;
+			}
+		}
+		std::cout << "Not available!\n";
+	}
+
 	std::vector<Node*>& getChildren() {
 		return children;
+	}
+
+	void shuffleChildren() {
+		for (int i = 0; i < children.size(); i++) {
+			int num = binaryRandom();
+			if (num) {
+				int nextRand = rand() % children.size();
+				std::swap(children[i], children[nextRand]);
+			}
+		}
 	}
 
 };

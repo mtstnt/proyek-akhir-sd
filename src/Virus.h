@@ -1,5 +1,4 @@
 #pragma once
-#include"Tools.h"
 #include "Node.h"
 
 using namespace std;
@@ -25,4 +24,6 @@ public:
 	void updateVirus();
 	void changeName();
 	void changeFilename();
+
+	int getID() { return id; }
 };

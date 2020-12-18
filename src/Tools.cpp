@@ -1,29 +1,23 @@
-//#include"Tools.h"
-//
-//tools::tools() {
-//	turn = false;
-//}
-//void tools::input(string x) {
-//	if (x == "0") {
-//		T1();
-//	}
-//	else if (x == "0") {
-//		T2();
-//	}
-//	else if (x == "0") {
-//		T3();
-//	}
-//	else if (x == "0") {
-//
-//	}
-//}
-//void tools::T1() {
-//
-//}
-//void tools::T2() {
-//
-//}
-//void tools::T3() {
-//
-//}
-//bool tools::getTurn() { return turn; }
+#include "Tools.h"
+#include "Commands.h"
+
+BaseTool::BaseTool(GameInfo& info) : info(info) {}
+
+// Check apakah sekarang bisa diexecute tool nya
+bool BaseTool::evaluateConditions() {
+	return isAvailable && cooldown == 0;
+}
+
+void BaseTool::setAvailability(bool _isAvailable) 
+{
+	isAvailable = _isAvailable;
+}
+
+void BaseTool::setCooldown(int time)
+{
+	cooldown = time;
+}
+
+int BaseTool::getCooldown() { return cooldown; }
+
+bool BaseTool::getAvailable() const { return isAvailable; }

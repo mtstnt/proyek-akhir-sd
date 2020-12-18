@@ -38,6 +38,8 @@ namespace FS
 		virtual void VExit();
 
 		void writePath();
-		
+
+		void updateTools();
+		void updateVirus();
 	};
 }

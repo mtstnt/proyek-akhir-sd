@@ -1,7 +1,6 @@
 #pragma once
 #include "Includes.h"
-#include "Commands.h"
-
+#include "GameInfo.h"
 
 class BaseTool
 {
@@ -14,44 +13,30 @@ protected:
 	bool isAvailable = true;
 
 	// Sedang cooldown sejak penggunaan terakhir.
-	unsigned int MAX_COOLDOWN;
-	unsigned int cooldown = 0;
+	int MAX_COOLDOWN = 5;
+	int cooldown = 0;
+
+	std::string response;
 
 public:
-	BaseTool(GameInfo& info) : info(info) {}
+	BaseTool(GameInfo& info);
 
 	// Check apakah sekarang bisa diexecute tool nya
-	virtual bool evaluateConditions() {
-		if (!isAvailable) return false;
-		if (cooldown > 0) return false;
-
-		return true;
-	}
+	virtual bool evaluateConditions();
 
 	// Execute action, di dlm directory treenya GameInfo
 	virtual void doAction() = 0;
 
-	void setAvailability(bool _isAvailable) {
-		isAvailable = _isAvailable;
-	}
+	void setAvailability(bool _isAvailable);
 
-	void restartCooldown() { cooldown = MAX_COOLDOWN; }
+	void setCooldown(int time);
+	void decrementCooldown() { cooldown--; }
 
-	int getCooldown() { return cooldown; }
+	int getCooldown();
 
-	bool getAvailable() const { return isAvailable;  }
-};
+	bool getAvailable() const;
 
-class ToolDetectVirus : public BaseTool
-{
-protected:
-	const char* uniqueName = "detector";
-
-public:
-	ToolDetectVirus(GameInfo& info) : BaseTool(info) {}
-
-	void doAction() override {
-		
+	const std::string& getResponse() const {
+		return response;
 	}
 };
-

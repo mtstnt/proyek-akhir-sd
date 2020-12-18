@@ -1,5 +1,4 @@
-#include"Virus.h"
-#include"Tools.cpp"
+#include "Virus.h"
 
 // parent virus
 virus::virus() {
@@ -13,6 +12,10 @@ void virus::moveToFolder() {
 	}
 }
 void virus::deleteFile() {//manggil deleteChild()
+	if (this->parent->as<Directory*>()->getChildren().size() == 0) {
+		return;
+	}
+
 	int random = rand() % ((Directory*)this->parent)->getChildren().size();
 	auto sibling = this->as<Directory*>()->getParent()->as<Directory*>()->getChildren();
 	if (sibling.at(random)->checkType() != Type::Virus)
@@ -29,7 +32,7 @@ void virus::deleteFile() {//manggil deleteChild()
 
 }
 void virus::updateVirus() {
-	int random = rand() % 2;
+	/*int random = rand() % 2;
 	switch (random)
 	{
 	case 0:
@@ -40,7 +43,8 @@ void virus::updateVirus() {
 		break;
 	default:
 		break;
-	}
+	}*/
+	deleteFile();
 }
 
 void virus::changeName() {
