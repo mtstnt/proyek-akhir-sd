@@ -24,12 +24,12 @@ void FS::GameState::VInit()
 	data.currentNode = root;
 	data.currentPath.push("root");
 
-	Directory* rootDir = root->as<Directory*>();
+	/*Directory* rootDir = root->as<Directory*>();
 	for (auto& a : root->as<Directory*>()->getChildren()) {
 		std::cout << a->getName() << std::endl;
 	}
 
-	std::cout << "=====================\n";
+	std::cout << "=====================\n";*/
 
 	// Setup tools.
 	data.tools["detector"] = new ToolDetectVirus(data);
@@ -44,10 +44,11 @@ void FS::GameState::VUpdate(float dt)
 	//Console::get().setColor(1);
 	// Prompt
 	std::cout << prompt << "\n";
+	prompt.clear();
 
 	// Ask for input
 	writePath();
-	std::cout << "$";
+	std::cout << " $";
 
 	// Minta input
 	getline(std::cin, input);
@@ -70,4 +71,14 @@ void FS::GameState::VPause() {}
 void FS::GameState::VExit()
 {
 	m_data->machine.RemoveState();
+}
+
+void FS::GameState::writePath()
+{
+	for (int i = 0; i < data.currentPath.size(); i++) {
+		std::cout << data.currentPath.get(i);
+		if (i != data.currentPath.size() - 1) {
+			std::cout << "/";
+		}
+	}
 }

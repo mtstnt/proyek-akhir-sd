@@ -45,7 +45,7 @@ public:
 	// Cast object to something else (Syntax sugar)
 	template<typename T>
 	T as() {
-		return (T)this;
+		return dynamic_cast<T>(this);
 	}
 };
 
@@ -68,11 +68,21 @@ public:
 	}
 
 	void deleteChild(int index) {
-		delete children[index];
-		children.erase(children.begin() + index);
+		if (children[index]->checkType() != Type::Directory) {
+			delete children[index];
+			children.erase(children.begin() + index);
+			return;
+		}
+
+		deleteFolderRecursive(children[index]);
 	}
 
-	const std::vector<Node*>& getChildren() const {
+	void deleteFolderRecursive(Node* dir) 
+	{
+		
+	}
+
+	std::vector<Node*>& getChildren() {
 		return children;
 	}
 

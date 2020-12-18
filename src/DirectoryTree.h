@@ -8,7 +8,6 @@ class DirectoryTree
 {
 private:
 	Directory* root;
-	Node* current;
 	int maxLevel;
 	int maxElements = 3;
 
@@ -74,8 +73,11 @@ public:
 	}
 
 	DirectoryTree(int maxLevel) : maxLevel (maxLevel) {
-	
 		root = new Directory("root");
+	}
+
+	~DirectoryTree() {
+
 	}
 
 	void setMaxLevel(int level) {
@@ -102,5 +104,25 @@ public:
 	// Bisa pake dynamic_cast<Directory*>(node) => Klo null brarti salah. Klo gk brarti bisa dicast.
 	Node* getRoot() {
 		return root;
+	}
+
+	void move(Node* node, Directory* target)
+	{
+		Directory* parent = node->getParent()->as<Directory*>();
+		target->addChild(node);
+		
+		int idx = -1;
+		for (int i = 0; i < parent->getChildren().size(); i++) {
+			if (parent->getChildren()[i] == node) {
+				idx = i;
+				break;
+			}
+		}
+
+		if (idx != -1) {
+			parent->getChildren().erase(parent->getChildren().begin() + idx);
+		}
+
+		node->setParent(target);
 	}
 };

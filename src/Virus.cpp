@@ -5,13 +5,18 @@
 virus::virus() {
 	
 }
-void virus::moveToFolder() {
-
+void virus::moveToFolder() 
+{
+	
 }
-void virus::deleteFile() {//manggil deleteChild()
+
+void virus::deleteFile() 
+{
 	((Directory*)this->parent)->deleteChild(rand() % 9);
 }
-void virus::updateVirus() {
+
+void virus::updateVirus() 
+{
 
 }
 

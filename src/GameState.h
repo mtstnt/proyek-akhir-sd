@@ -35,14 +35,7 @@ namespace FS
 		virtual void VPause();
 		virtual void VExit();
 
-		void writePath() 
-		{
-			for (int i = 0; i < data.currentPath.size(); i++) {
-				std::cout << data.currentPath.get(i);
-				if (i != data.currentPath.size() - 1) {
-					std::cout << "/";
-				}
-			}
-		}
+		void writePath();
+		
 	};
 }

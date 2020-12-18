@@ -38,7 +38,13 @@ public:
 
 	std::string getResponse() override 
 	{
+		if (data.currentNode->checkType() != Type::Directory) {
+			data.currentNode = data.currentNode->getParent();
+			return "Cannot ls in non-directory!\n";
+		}
+
 		Directory* dir = (Directory*)data.currentNode;
+
 		//Console::get().setColor(2);
 		std::cout << "Displaying the current directory: " << data.currentNode->getName() << "\n";
 		for (int i = 0; i < dir->getChildren().size(); i++)
@@ -93,8 +99,14 @@ public:
 				}
 			}
 
-			if (next == nullptr) {
+			if (next == nullptr) 
+			{
 				response = "Cannot find " + this->params[1];
+				return;
+			}
+
+			if (next->checkType() == Type::File) {
+				response = "Cannot cd into a file!\n";
 				return;
 			}
 
