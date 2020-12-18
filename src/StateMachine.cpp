@@ -17,6 +17,7 @@ namespace FS
 
 	void FS::StateMachine::ProcessStateChanges()
 	{
+		//std::cout << R"(Size)" <<m_states.size() << std::endl;
 		if (m_isRemoving && !m_states.empty())
 		{
 			m_states.pop();
