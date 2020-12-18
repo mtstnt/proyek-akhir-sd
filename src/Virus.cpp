@@ -3,52 +3,55 @@
 
 // parent virus
 virus::virus() {
-	
+
 }
-void virus::moveToFolder() 
+void virus::moveToFolder() {
+	auto sibling = ((Directory*)this->parent)->getChildren();
+	if (sibling.size() == 1)
+	{
+
+	}
+}
+void virus::deleteFile() {//manggil deleteChild()
+	int random = rand() % ((Directory*)this->parent)->getChildren().size();
+	auto sibling = this->as<Directory*>()->getParent()->as<Directory*>()->getChildren();
+	if (sibling.at(random)->checkType() != Type::Virus)
+	{
+		//std::cout << "File deleted: " << sibling.at(random)->getName() << std::endl;
+		((Directory*)this->parent)->deleteChild(random);
+	}
+	//else
+	//{
+	//	std::cout << "Unable to delete" << std::endl;
+	//}
+
+	//Kalau yg kedelete parent child nya gimana?
+
+}
+void virus::updateVirus() {
+	int random = rand() % 2;
+	switch (random)
+	{
+	case 0:
+		deleteFile();
+		break;
+	case 1:
+		changeName();
+		break;
+	default:
+		break;
+	}
+}
+
+void virus::changeName() {
+	string bahan = "BeliAyamMCDdapeTbURGERkingTAPIsaOSWendYYrAsaKentUCKY";
+	int length = bahan.length();
+	int panjang_string_baru = rand() % 7;
+	int offset = rand() % (length - panjang_string_baru);
+	string substring = bahan.substr(offset, panjang_string_baru);
+	this->name = substring + ".exe";
+}
+
+void virus::changeFilename()
 {
-	
 }
-
-void virus::deleteFile() 
-{
-	((Directory*)this->parent)->deleteChild(rand() % 9);
-}
-
-void virus::updateVirus() 
-{
-
-}
-
-//// virus jenis 1
-//V1::V1() {
-//
-//}
-//void V1::moveToFolder() {
-//
-//}
-//void V1::deleteFile() {
-//
-//}
-//
-//// virus jenis 2
-//V2::V2() {
-//
-//}
-//void V2::moveToFolder() {
-//
-//}
-//void V2::deleteFile() {
-//
-//}
-//
-//// virus jenis 2
-//V3::V3() {
-//
-//}
-//void V3::moveToFolder() {
-//
-//}
-//void V3::deleteFile() {
-//
-//}

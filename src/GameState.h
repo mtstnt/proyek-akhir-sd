@@ -3,6 +3,7 @@
 #include "App.h"
 #include "CommandParser.h"
 #include "GameInfo.h"
+#include "Virus.h"
 
 namespace FS
 {
@@ -23,6 +24,7 @@ namespace FS
 		std::string input;
 
 		// List virus TODO
+		virus* vrs = nullptr;
 
 	public:
 		GameState(GameDataRef data);

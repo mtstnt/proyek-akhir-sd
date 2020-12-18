@@ -9,7 +9,6 @@ class virus : public Node
 protected:
 	int id = 0;
 	int size;
-	//tools t;
 	string loc;
 	bool turn;
 
@@ -24,31 +23,6 @@ public:
 	virtual void moveToFolder();
 	virtual void deleteFile();
 	void updateVirus();
+	void changeName();
+	void changeFilename();
 };
-
-//class V1 : protected virus : virus(ID) {
-//protected:
-//
-//public:
-//	V1();
-//	void moveToFolder();
-//	void deleteFile();
-//};
-//
-//class V2 : protected virus {
-//protected:
-//
-//public:
-//	V2();
-//	void moveToFolder();
-//	void deleteFile();
-//};
-//
-//class V3 : protected virus {
-//protected:
-//
-//public:
-//	V3();
-//	void moveToFolder();
-//	void deleteFile();
-//};

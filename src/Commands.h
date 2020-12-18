@@ -158,3 +158,66 @@ public:
 	}
 
 };
+
+class Remove : public BaseCommand
+{
+private:
+	std::string response;
+
+public:
+	Remove(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		if (params.size() <= 1) {
+			response = "";
+			return;
+		}
+		else
+		{
+			int deleted_node_id = 0;
+			Node* node = data.currentNode;
+			auto children = node->as<Directory*>()->getChildren();
+			std::cout << params << std::endl;
+			for (int i = 0; i < children.size(); i++)
+			{
+				if (children.at(i)->getName() == this->params[1])
+				{
+					deleted_node_id = i;
+					node->as<Directory*>()->deleteChild(deleted_node_id); //asumsi bisa delete folder juga :)
+					response = "File deleted";
+					break;
+				}
+				else
+				{
+					response = "Failed to delete file";
+				}
+			}
+			
+		}
+	}
+
+	std::string getResponse() override {
+		return response;
+	}
+};
+
+class Help : public BaseCommand
+{
+private:
+	std::string response;
+
+public:
+	Help(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]";
+	}
+
+	std::string getResponse() override {
+		return response;
+	}
+};

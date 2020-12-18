@@ -21,7 +21,7 @@ public:
 	Node(std::string name) : name(name) {}
 
 	virtual Type checkType() = 0;
-	
+
 	std::string getName() {
 		return name;
 	}
@@ -42,10 +42,9 @@ public:
 		return level;
 	}
 
-	// Cast object to something else (Syntax sugar)
 	template<typename T>
 	T as() {
-		return dynamic_cast<T>(this);
+		return (T)this;
 	}
 };
 
@@ -68,25 +67,14 @@ public:
 	}
 
 	void deleteChild(int index) {
-		if (children[index]->checkType() != Type::Directory) {
-			delete children[index];
-			children.erase(children.begin() + index);
-			return;
-		}
-
-		deleteFolderRecursive(children[index]);
-	}
-
-	void deleteFolderRecursive(Node* dir) 
-	{
-		
+		delete children[index];
+		children.erase(children.begin() + index);
 	}
 
 	std::vector<Node*>& getChildren() {
 		return children;
 	}
 
-	
 };
 
 class File : public Node
