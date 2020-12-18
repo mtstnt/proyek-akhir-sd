@@ -3,6 +3,7 @@
 #include "FileSystem.h"
 
 #include "GameState.h"
+#include "CreditState.h"
 
 
 FS::MainMenuState::MainMenuState(GameDataRef data): m_data(data)
@@ -55,10 +56,11 @@ void FS::MainMenuState::GameMenu()
 	{
 	case '1':
 		std::cout << "is Playing" << std::endl;
-		m_data->machine.AddState(std::make_unique<GameState>(m_data));
+		m_data->machine.AddState(std::make_unique<GameState>(m_data), false);
 		break;
 	case '2':
 		std::cout << "is Credits" << std::endl;
+		m_data->machine.AddState(StateRef(new CreditState(m_data)), false);
 		break;
 	case '0':
 		std::cout << "Press again to exit.." << std::endl;
