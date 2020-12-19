@@ -12,6 +12,7 @@ void virus::moveToFolder() {
 	}
 }
 void virus::deleteFile() {//manggil deleteChild()
+	std::cout << this->parent->as<Directory*>()->getChildren().size() << std::endl;
 	if (this->parent->as<Directory*>()->getChildren().size() == 0) {
 		return;
 	}
@@ -32,6 +33,7 @@ void virus::deleteFile() {//manggil deleteChild()
 
 }
 void virus::updateVirus() {
+	printf("OI VIRUS E UPDATE!\n");
 	/*int random = rand() % 2;
 	switch (random)
 	{

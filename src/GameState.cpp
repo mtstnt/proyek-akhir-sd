@@ -108,6 +108,11 @@ void FS::GameState::updateVirus()
 				vParent->getParent()
 					->as<Directory*>()
 					->addChild(v);
+
+				if (vParent->getParent() != data.tree.getRoot())
+					v->setParent(vParent->getParent());
+				else
+					std::cout << "KALAH\n";
 			}
 			else {
 				std::cout << "ANDA KALAH!\n";
