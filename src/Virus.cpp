@@ -18,7 +18,7 @@ void virus::deleteFile() {//manggil deleteChild()
 	}
 
 	int random = rand() % ((Directory*)this->parent)->getChildren().size();
-	auto sibling = this->as<Directory*>()->getParent()->as<Directory*>()->getChildren();
+	auto sibling = this->getParent()->as<Directory*>()->getChildren();
 	if (sibling.at(random)->checkType() != Type::Virus)
 	{
 		//std::cout << "File deleted: " << sibling.at(random)->getName() << std::endl;

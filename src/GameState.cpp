@@ -101,7 +101,10 @@ void FS::GameState::updateVirus()
 {
 	auto& ref = data.tree.getVirusesList();
 	for (virus* v : ref) {
+		if (v == nullptr) continue;
+
 		Directory* vParent = v->getParent()->as<Directory*>();
+		
 		if (vParent->getChildren().size() == 1) {
 			if (vParent->getParent() != data.tree.getRoot()) {
 				vParent->deleteChild(v);

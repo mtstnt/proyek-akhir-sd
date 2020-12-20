@@ -44,7 +44,7 @@ public:
 
 	template<typename T>
 	T as() {
-		return (T)this;
+		return dynamic_cast<T>(this);
 	}
 };
 

@@ -44,7 +44,12 @@ public:
 			return "Cannot ls in non-directory!\n";
 		}
 
-		Directory* dir = (Directory*)data.currentNode;
+		Directory* dir = data.currentNode->as<Directory*>();
+
+		if (dir == nullptr) {
+			data.currentNode = data.currentNode->getParent();
+			return "Not a directory!\n";
+		}
 
 		//Console::get().setColor(2);
 		std::cout << "Displaying the current directory: " << data.currentNode->getName() << "\n";
@@ -74,8 +79,8 @@ public:
 	void parse(const std::string& params) override {
 		BaseCommand::parse(params);
 
-		if (params.size() <= 1) {
-			response = "";
+		if (this->params.size() <= 1) {
+			response = "No path specified.";
 			return;
 		}
 
@@ -106,7 +111,7 @@ public:
 				return;
 			}
 
-			if (next->checkType() == Type::File) {
+			if (next->checkType() == Type::File || next->checkType() == Type::Virus) {
 				response = "Cannot cd into a file!\n";
 				return;
 			}
@@ -183,7 +188,7 @@ public:
 		}
 		else
 		{
-			int deleted_node_id = 0;
+			int deleted_node_id = -1;
 			Node* node = data.currentNode;
 			auto& children = node->as<Directory*>()->getChildren();
 			for (int i = 0; i < children.size(); i++)
@@ -209,12 +214,12 @@ public:
 					response = "File deleted";
 					break;
 				}
-				else
-				{
-					response = "Failed to delete file";
-				}
 			}
-			
+
+			if (deleted_node_id == -1) {
+				response = "File not found!\n";
+				return;
+			}
 		}
 	}
 
