@@ -32,7 +32,7 @@ void App::run()
 	//std::string input;
 	//getline(std::cin, input);
 
-	//m_data->musicPlayer.play();
+	m_data->musicPlayer.play();
 
 	Console::get().startHandle();
 

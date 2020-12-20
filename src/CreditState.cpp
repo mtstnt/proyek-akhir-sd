@@ -18,6 +18,7 @@ void FS::CreditState::VUpdate(float dt)
 	std::cout << "William TM		/ C14190146	\n";
 	std::cout << "Vincent D		/ C14190162	\n";
 
+	std::cout << "Thank you for playing Bad Software :)\n";
 	std::cout << "Back (Press 0): " << std::endl;
 	char input; std::cin >> input;
 	if (input == '0')

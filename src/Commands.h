@@ -234,7 +234,36 @@ public:
 	void parse(const std::string& params) override {
 		BaseCommand::parse(params);
 
-		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]";
+		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]\n\tcolor [attr]";
+	}
+
+	std::string getResponse() override {
+		return response;
+	}
+};
+
+class Color : public BaseCommand
+{
+private:
+	std::string response;
+
+public:
+	Color(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		if (params == "color")
+		{
+			system("color 07");
+		}
+		else
+		{
+			const char* cmd = params.c_str();
+			system(cmd);
+		}
+		
+		response = "";
 	}
 
 	std::string getResponse() override {
