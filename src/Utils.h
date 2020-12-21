@@ -13,7 +13,7 @@ namespace Utils
 		}
 	};
 
-	inline std::vector<std::string> split(const std::string& str)
+	inline std::vector<std::string> split(std::string str)
 	{
 		std::vector<std::string> splitResults;
 		std::string word;

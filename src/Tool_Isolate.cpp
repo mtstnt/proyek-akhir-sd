@@ -32,6 +32,6 @@ void Tool_Isolate::doAction()
 		response = "Error: Directory is already isolated for " + std::to_string(h) + "\n";
 		return;
 	}
-	dirToIsolate->setIsolationDuration = this->isolationDuration;
+	dirToIsolate->setIsolationDuration(this->isolationDuration);
 	response = "Directory " + dirToIsolate->getName() + " has been isolated for " + std::to_string(this->isolationDuration) + ".\n";
 }

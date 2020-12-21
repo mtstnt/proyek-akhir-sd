@@ -1,6 +1,7 @@
 #pragma once
-
 #include "Includes.h"
+
+class DirectoryTree;
 
 enum class Type {
 	Directory,
@@ -52,10 +53,15 @@ class Directory : public Node
 private:
 	std::vector<Node*> children;
 	int isolateDuration = 0;
+	DirectoryTree* treeRef = nullptr;
 
 public:
 	Directory() = default;
-	Directory(std::string name) : Node(name) {}
+	Directory(std::string name, DirectoryTree* treeRef) 
+		: Node(name), treeRef(treeRef) {}
+
+	// Butuh di file lain karena ada circular dependency disini
+	void deleteChild(Node* node);
 
 	Type checkType() override {
 		return Type::Directory;
@@ -69,16 +75,6 @@ public:
 	void deleteChild(int index) {
 		delete children[index];
 		children.erase(children.begin() + index);
-	}
-
-	void deleteChild(Node* node) {
-		for (int i = 0; i < children.size(); i++) {
-			if (children[i] == node) {
-				children.erase(children.begin() + i);
-				return;
-			}
-		}
-		std::cout << "Not available!\n";
 	}
 
 	std::vector<Node*>& getChildren() {
