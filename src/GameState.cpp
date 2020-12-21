@@ -29,21 +29,26 @@ void FS::GameState::VInit()
 
 	// Setup tools.
 	data.tools["detector"] = new Tool_Detector(data);
-	 //data.tools["isolate"] = new ToolIsolate(data);
+	// data.tools["isolate"] = new ToolIsolate(data);
 
 	// Bersihin stdin dari enter yang dari cinnya menu.
 	getchar();
-
-	data.tree.dfs();
 }
 
 void FS::GameState::VUpdate(float dt)
 {
 	//Console::get().setColor(1);
+	// Prompt
+	std::cout << prompt << "\n";
+
+	if (data.tree.getVirusesList().size() == 0) {
+		std::cout << "SELAMAT! ANDA MENANG!\n";
+		VExit();
+	}
 
 	// Ask for input
 	writePath();
-	std::cout << " >";
+	std::cout << "$";
 
 	// Minta input
 	getline(std::cin, input);
@@ -52,22 +57,12 @@ void FS::GameState::VUpdate(float dt)
 	if (input == "quit") {
 		VExit();
 	}
-	else if (input == "dfs") {
-		data.tree.dfs();
-		std::cout << "\n";
-	}
 
 	// Parse input. Semua proses dia inputnya mau ngapain ada di CommandParser.
 	parser.parse(data, input);
 
 	// Response dari eksekusi command dari parser dikirimkan ke prompt.
-	std::cout << parser.response() << "\n";
-
-	if (data.tree.getVirusesList().size() == 0) {
-		std::cout << "SELAMAT! ANDA MENANG!\n";
-		VExit();
-		return;
-	}
+	prompt = parser.response();
 
 	updateVirus();
 	updateTools();
@@ -108,34 +103,19 @@ void FS::GameState::updateVirus()
 	for (virus* v : ref) {
 		if (v == nullptr) continue;
 
-		// Ambil parent dari setiap virus yang terdaftar di list
 		Directory* vParent = v->getParent()->as<Directory*>();
-
-		// Check apakah ada non-virus dlm dir yang sama
-		bool stillNeedToDelete = false;
-		for (Node* n : vParent->getChildren()) {
-			if (n->checkType() != Type::Virus && n != v) {
-				stillNeedToDelete = true;
-				break;
-			}
-		}
-
-		// Apabila semua non virus dlm directory itu sudah habis, 
-		//   pindah folder.
-		if (!stillNeedToDelete) {
+		
+		if (vParent->getChildren().size() == 1) {
 			if (vParent->getParent() != data.tree.getRoot()) {
+				vParent->deleteChild(v);
 				vParent->getParent()
 					->as<Directory*>()
 					->addChild(v);
 
-				for (int q = 0; q < vParent->getChildren().size(); q++) {
-					if (v == vParent->getChildren()[q]) {
-						vParent->getChildren().erase(vParent->getChildren().begin() + q);
-						break;
-					}
-				}
-
-				v->setParent(vParent->getParent());
+				if (vParent->getParent() != data.tree.getRoot())
+					v->setParent(vParent->getParent());
+				else
+					std::cout << "KALAH\n";
 			}
 			else {
 				std::cout << "ANDA KALAH!\n";

@@ -32,7 +32,7 @@ void App::run()
 	//std::string input;
 	//getline(std::cin, input);
 
-	//m_data->musicPlayer.play();
+	m_data->musicPlayer.play();
 
 	Console::get().startHandle();
 
@@ -46,5 +46,6 @@ void App::run()
 		else {
 			m_data->machine.GetActiveState()->VUpdate(0);
 		}
+
 	}
 }

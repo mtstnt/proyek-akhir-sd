@@ -4,34 +4,36 @@
 virus::virus() {
 
 }
-
 void virus::moveToFolder() {
-	
-}
+	auto sibling = ((Directory*)this->parent)->getChildren();
+	if (sibling.size() == 1)
+	{
 
+	}
+}
 void virus::deleteFile() {//manggil deleteChild()
-	if (this->parent->as<Directory*>()->getChildren().size() == 1) {
+	std::cout << this->parent->as<Directory*>()->getChildren().size() << std::endl;
+	if (this->parent->as<Directory*>()->getChildren().size() == 0) {
 		return;
 	}
-	
+
+	int random = rand() % ((Directory*)this->parent)->getChildren().size();
 	auto sibling = this->getParent()->as<Directory*>()->getChildren();
-
-	// Jangan sampai delete diri sendiri
-	int random;
-	do {
-		random = rand() % sibling.size();
-	} while (sibling[random] == this);
-
 	if (sibling.at(random)->checkType() != Type::Virus)
 	{
-		/*std::cout << this->getName() << " deletes " << sibling.at(random)->getName() << "\n";*/
-		this->parent->as<Directory*>()->deleteChild(sibling.at(random));
+		//std::cout << "File deleted: " << sibling.at(random)->getName() << std::endl;
+		((Directory*)this->parent)->deleteChild(random);
 	}
+	//else
+	//{
+	//	std::cout << "Unable to delete" << std::endl;
+	//}
 
-	/*std::cout << "Virus: " << this->getName() << " " << this->getParent()->getName() << "\n";*/
+	//Kalau yg kedelete parent child nya gimana?
 
 }
 void virus::updateVirus() {
+	printf("OI VIRUS E UPDATE!\n");
 	/*int random = rand() % 2;
 	switch (random)
 	{

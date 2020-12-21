@@ -4,6 +4,7 @@
 
 #include "GameState.h"
 #include "CreditState.h"
+#include "SettingState.h"
 
 
 FS::MainMenuState::MainMenuState(GameDataRef data): m_data(data)
@@ -49,6 +50,7 @@ void FS::MainMenuState::GameMenu()
 	std::cout << "MAIN MENU " << std::endl;
 	std::cout << "1. Play   " << std::endl;
 	std::cout << "2. Credits" << std::endl;
+	std::cout << "3. Setting" << std::endl;
 	std::cout << "0. Quit   " << std::endl;
 	char choice; std::cin >> choice;
 
@@ -61,6 +63,10 @@ void FS::MainMenuState::GameMenu()
 	case '2':
 		std::cout << "is Credits" << std::endl;
 		m_data->machine.AddState(StateRef(new CreditState(m_data)), false);
+		break;
+	case '3':
+		std::cout << "is Credits" << std::endl;
+		m_data->machine.AddState(StateRef(new SettingState(m_data)), false);
 		break;
 	case '0':
 		std::cout << "Press again to exit.." << std::endl;

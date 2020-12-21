@@ -26,7 +26,6 @@ public:
 	
 	virtual void parse(const std::string& paramString) 
 	{
-		// Bug here
 		params = Utils::split(paramString);
 	}
 
@@ -168,7 +167,7 @@ public:
 	void parse(const std::string& params) override {
 		BaseCommand::parse(params);
 
-		if (this->params.size() <= 1) {
+		if (params.size() <= 1) {
 			response = "";
 			return;
 		}
@@ -183,8 +182,19 @@ public:
 				{
 					deleted_node_id = i;
 
-					node->as<Directory*>()
-						->deleteChild(children.at(deleted_node_id));
+					// Delete dari virus listnya GameState
+					if (children.at(i)->checkType() == Type::Virus) {
+						virus* v = children.at(i)->as<virus*>();
+						auto& ref = data.tree.getVirusesList();
+						for (int j = 0; j < ref.size(); j++) {
+							if (ref[j]->as<virus*>()->getID() == v->getID()) {
+								ref.erase(ref.begin() + j);
+								break;
+							}
+						}
+					}
+
+					node->as<Directory*>()->deleteChild(deleted_node_id); //asumsi bisa delete folder juga :)
 
 					response = "File deleted";
 					break;
@@ -211,8 +221,6 @@ public:
 	}
 };
 
-// Sek ngko iki
-// Buat display informasi file (?)
 class DisplayInformation
 	: BaseCommand
 {

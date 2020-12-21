@@ -1,13 +1,16 @@
 #pragma once
 #include "Includes.h"
+#include "LinkedList.h"
 
 namespace FS
 {
 	class MusicPlayer
 	{
 	private:
-		std::string filename;
+		LinkedList<std::string> list;
 		bool isLooping = false;
+		bool file_open = false;
+		int get = 0;
 
 	public:
 		MusicPlayer();
@@ -15,6 +18,8 @@ namespace FS
 
 		void play();
 		void stop();
+		void display();
+		void ChangeTrack(std::string str);
 	};
 }
 
