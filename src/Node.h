@@ -5,7 +5,6 @@
 enum class Type {
 	Directory,
 	File,
-	Executable,
 	Virus
 };
 
@@ -52,6 +51,7 @@ class Directory : public Node
 {
 private:
 	std::vector<Node*> children;
+	int isolateDuration = 0;
 
 public:
 	Directory() = default;
@@ -94,6 +94,12 @@ public:
 			}
 		}
 	}
+
+	void setIsolationDuration(int isolation) {
+		this->isolateDuration = isolation;
+	}
+
+	int getIsolationDuration() { return this->isolateDuration; }
 
 };
 

@@ -17,8 +17,8 @@ class BaseCommand
 {
 protected:
 	std::vector<std::string> params;
-
 	GameInfo& data;
+	std::string response;
 
 public:
 
@@ -29,7 +29,9 @@ public:
 		params = Utils::split(paramString);
 	}
 
-	virtual std::string getResponse() = 0;
+	virtual std::string getResponse() {
+		return this->response;
+	}
 };
 
 class ListDirectory : public BaseCommand
@@ -70,9 +72,6 @@ public:
 
 class GotoDirectory : public BaseCommand
 {
-private:
-	std::string response;
-
 public:
 	GotoDirectory(GameInfo& data) : BaseCommand(data) {}
 
@@ -120,16 +119,10 @@ public:
 			data.currentPath.push(next->getName());
 		}
 	}
-
-	std::string getResponse() override {
-		return response;
-	}
 };
 
 class UseTool : public BaseCommand
 {
-private:
-	std::string response;
 public:
 	UseTool(GameInfo& info) : BaseCommand(info) {}
 
@@ -164,18 +157,10 @@ public:
 			return;
 		}
 	}
-
-	std::string getResponse() override {
-		return response;
-	}
-
 };
 
 class Remove : public BaseCommand
 {
-private:
-	std::string response;
-
 public:
 	Remove(GameInfo& data) : BaseCommand(data) {}
 
@@ -222,17 +207,10 @@ public:
 			}
 		}
 	}
-
-	std::string getResponse() override {
-		return response;
-	}
 };
 
 class Help : public BaseCommand
 {
-private:
-	std::string response;
-
 public:
 	Help(GameInfo& data) : BaseCommand(data) {}
 
@@ -241,8 +219,17 @@ public:
 
 		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]";
 	}
+};
 
-	std::string getResponse() override {
-		return response;
+class DisplayInformation
+	: BaseCommand
+{
+public:
+	DisplayInformation(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]";
 	}
 };

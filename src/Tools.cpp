@@ -4,7 +4,8 @@
 BaseTool::BaseTool(GameInfo& info) : info(info) {}
 
 // Check apakah sekarang bisa diexecute tool nya
-bool BaseTool::evaluateConditions() {
+bool BaseTool::evaluateConditions() 
+{
 	return isAvailable && cooldown == 0;
 }
 
