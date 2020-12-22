@@ -10,6 +10,8 @@ private:
 	std::unique_ptr<BaseCommand> command;
 
 public:
+	std::string CurKey;//will
+
 	CommandParser() = default;
 
 	void parse(GameInfo& info, std::string commands)
@@ -31,7 +33,7 @@ public:
 
 		// Coba param 1 kata aja dlu
 		std::string currentKeyword = parsingQueue.front();
-
+		CurKey = parsingQueue.front();//will
 		parsingQueue.pop();
 
 		// Checking
@@ -70,5 +72,8 @@ public:
 		return command->getResponse();
 	}
 
+	std::string getCommand() {
+		return CurKey;//will
+	}
 
 };
