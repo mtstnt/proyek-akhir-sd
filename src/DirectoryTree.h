@@ -181,10 +181,10 @@ public:
 			Directory* d = n->as<Directory*>();
 
 			if (
-				rand() % 100 > 50 &&
-				count > 0 && 
-				d->getLevel() > this->minimumVirusLevel &&
-				prevDir != d
+					rand() % 100 > 50 &&
+					count > 0 && 
+					d->getLevel() > this->minimumVirusLevel &&
+					prevDir != d
 				) {
 				// Make new virus
 				std::string fileName;
