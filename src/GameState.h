@@ -23,8 +23,9 @@ namespace FS
 		std::string prompt;
 		std::string input;
 
-		// List virus TODO
-		virus* vrs = nullptr;
+		// Max turn, apakah game sudah selesai atau belum
+		int max_turn;
+		bool is_over = false;
 
 	public:
 		GameState(GameDataRef data);

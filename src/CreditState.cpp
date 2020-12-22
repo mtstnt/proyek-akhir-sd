@@ -10,6 +10,7 @@ FS::CreditState::~CreditState()
 
 void FS::CreditState::VInit()
 {
+
 }
 
 void FS::CreditState::VUpdate(float dt)

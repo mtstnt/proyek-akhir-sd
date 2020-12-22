@@ -69,6 +69,11 @@ void FS::GameState::VUpdate(float dt)
 
 	updateVirus();
 	updateTools();
+
+	if (is_over) {
+		VExit();
+		return;
+	}
 }
 
 void FS::GameState::VResume() {}
@@ -104,57 +109,29 @@ void FS::GameState::updateVirus()
 {
 	auto& ref = data.tree.getVirusesList();
 	for (virus* v : ref) {
-		if (v == nullptr) continue;
-
-		// Ambil parent dari setiap virus yang terdaftar di list
-		Directory* vParent = nullptr;
-		try {
-			vParent = v->getParent()->as<Directory*>();
-			if (vParent == nullptr) {
-				throw new exception("Opo iki");
-			}
+		if (v->getParent() == data.tree.getRoot()) {
+			std::cout << "ANDA KALAH!\n";
+			is_over = true;
+			return;
 		}
-		catch (...) {
-			std::cout << "Error lol\n";
-			for (int x = 0; x < ref.size(); x++) {
-				if (ref[x] == v) {
-					ref.erase(ref.begin() + x);
+
+		if (v->getParent()->as<Directory*>()->getChildren().size() <= 1) {
+			// Pindahin node ini ke parentnya
+			Directory* previous_directory = v->getParent()->as<Directory*>();
+			Directory* new_directory = v->getParent()->getParent()->as<Directory*>();
+
+			new_directory->getChildren().push_back(v);
+			for (int i = 0; i < previous_directory->getChildren().size(); i++) {
+				if (v == previous_directory->getChildren()[i]) {
+					previous_directory->getChildren().erase(
+						previous_directory->getChildren().begin() + i
+					);
 					break;
 				}
 			}
-			continue;
-		}
-
-		// Check apakah ada non-virus dlm dir yang sama
-		bool stillNeedToDelete = false;
-		for (Node* n : vParent->getChildren()) {
-			if (n->checkType() != Type::Virus && n != v) {
-				stillNeedToDelete = true;
-				break;
-			}
-		}
-
-		// Apabila semua non virus dlm directory itu sudah habis, 
-		//   pindah folder.
-		if (!stillNeedToDelete) {
-			if (vParent->getParent() != data.tree.getRoot()) {
-				vParent->getParent()
-					->as<Directory*>()
-					->addChild(v);
-
-				for (int q = 0; q < vParent->getChildren().size(); q++) {
-					if (v == vParent->getChildren()[q]) {
-						vParent->getChildren().erase(vParent->getChildren().begin() + q);
-						break;
-					}
-				}
-
-				v->setParent(vParent->getParent());
-			}
-			else {
-				std::cout << "ANDA KALAH!\n";
-				VExit();
-			}
+			v->setParent(new_directory);
+			// Shuffle biar gk nd bwh terus
+			new_directory->shuffleChildren();
 		}
 		else {
 			v->updateVirus();
