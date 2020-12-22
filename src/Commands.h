@@ -208,3 +208,45 @@ public:
 		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]";
 	}
 };
+
+class Color : public BaseCommand
+{
+private:
+	std::string response;
+
+public:
+	Color(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		if (params == "color" || params == "COLOR" || params == "Color")
+		{
+			system("color 07");
+		}
+		else
+		{
+			const char* cmd = params.c_str();
+			system(cmd);
+		}
+
+		response = "";
+	}
+
+	std::string getResponse() override {
+		return response;
+	}
+};
+
+class CLS : public BaseCommand
+{
+public:
+	CLS(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		system("cls");
+		response = "";
+	}
+};

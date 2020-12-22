@@ -17,10 +17,12 @@ FS::MainMenuState::~MainMenuState()
 
 void FS::MainMenuState::VInit()
 {
+	system("cls");
 }
 
 void FS::MainMenuState::VUpdate(float dt)
 {
+	system("cls");
 	this->GameTitle();
 	this->GameMenu();
 }
@@ -36,6 +38,7 @@ void FS::MainMenuState::VPause()
 void FS::MainMenuState::VExit()
 {
 	m_data->machine.RemoveState();
+	system("cls");
 }
 
 void FS::MainMenuState::GameTitle()

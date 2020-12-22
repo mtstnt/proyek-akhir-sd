@@ -10,6 +10,7 @@ FS::GameState::~GameState() {}
 
 void FS::GameState::VInit()
 {
+	system("cls");
 	std::cout << "Starting Game...\n";
 	Sleep(300);
 
@@ -27,7 +28,7 @@ void FS::GameState::VInit()
 
 	// Setup tools.
 	data.tools["detector"] = new Tool_Detector(data);
-	//data.tools["isolate"] = new ToolIsolate(data);
+	/*data.tools["isolate"] = new ToolIsolate(data);*/
 
    // Bersihin stdin dari enter yang dari cinnya menu.
 	getchar();
@@ -46,9 +47,10 @@ void FS::GameState::VUpdate(float dt)
 	// Minta input
 	getline(std::cin, input);
 
-	// Biar cepet
-	if (input == "quit") {
+	// Instant quit
+	if (input == "quit" || input == "Quit" || input == "QUIT" || input == "Exit" || input == "EXIT" || input == "exit") {
 		VExit();
+		return;
 	}
 	else if (input == "dfs") {
 		data.tree.dfs();
@@ -83,6 +85,7 @@ void FS::GameState::VPause() {}
 void FS::GameState::VExit()
 {
 	m_data->machine.RemoveState();
+	system("cls");
 }
 
 void FS::GameState::writePath()
@@ -110,7 +113,7 @@ void FS::GameState::updateVirus()
 	auto& ref = data.tree.getVirusesList();
 	for (virus* v : ref) {
 		if (v->getParent() == data.tree.getRoot()) {
-			std::cout << "ANDA KALAH!\n";
+			std::cout << "YOU LOST! THE VIRUS HAS REACHED THE ROOT!\n";
 			is_over = true;
 			return;
 		}

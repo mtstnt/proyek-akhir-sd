@@ -61,6 +61,16 @@ public:
 			command->parse(commands);
 			return;
 		}
+		if (currentKeyword == "color" || currentKeyword == "COLOR" || currentKeyword == "Color") {
+			command = std::make_unique<Color>(info);
+			command->parse(commands);
+			return;
+		}
+		if (currentKeyword == "cls" || currentKeyword == "CLS" || currentKeyword == "Cls") {
+			command = std::make_unique<CLS>(info);
+			command->parse(commands);
+			return;
+		}
 		//command = std::make_unique<NotFound>();
 
 	}

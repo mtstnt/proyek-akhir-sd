@@ -10,10 +10,13 @@ FS::SettingState::~SettingState()
 
 void FS::SettingState::VInit()
 {
+	system("cls");
 }
 
 void FS::SettingState::VUpdate(float dt)
 {
+	system("cls");
+
 	if (audio == true)
 	{
 		std::cout << "Audio ON" << std::endl;
@@ -73,4 +76,5 @@ void FS::SettingState::VPause()
 void FS::SettingState::VExit()
 {
 	m_data->machine.RemoveState();
+	system("cls");
 }
