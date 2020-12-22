@@ -17,10 +17,12 @@ FS::MainMenuState::~MainMenuState()
 
 void FS::MainMenuState::VInit()
 {
+	system("CLS");
 }
 
 void FS::MainMenuState::VUpdate(float dt)
 {
+	system("CLS");
 	this->GameTitle();
 	this->GameMenu();
 }
@@ -36,10 +38,13 @@ void FS::MainMenuState::VPause()
 void FS::MainMenuState::VExit()
 {
 	m_data->machine.RemoveState();
+	system("CLS");
 }
 
 void FS::MainMenuState::GameTitle()
 {
+	//ASCII art
+	// Done
 	std::cout << FileSystem::get().readFile("files/Title.txt", true, true) << std::endl;
 }
 

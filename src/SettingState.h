@@ -2,6 +2,7 @@
 #include "IState.h"
 #include "App.h"
 
+
 namespace FS
 {
 	class SettingState : public IState
@@ -21,3 +22,8 @@ namespace FS
 		virtual void VExit();
 	};
 }
+
+
+
+
+

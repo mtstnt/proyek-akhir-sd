@@ -10,16 +10,19 @@ class DirectoryTree
 {
 private:
 	Directory* root;
-	int maxLevel = 8;
+	int maxLevel;
 	int maxElements = 5;
 	int virusCount = 2;
-	int minimumVirusLevel = 2;
-	int minimumFolderGuarantee = 5;
 
 	std::vector<virus*> viruses;
 
 	void populate(int level, Node* now) {
-		if (level == maxLevel || now == nullptr) {
+
+		if (level == maxLevel) {
+			return;
+		}
+
+		if (now == nullptr) {
 			return;
 		}
 
@@ -31,18 +34,17 @@ private:
 		int childCount = rand() % (maxElements)+1;
 
 		// Memastikan ada 1 folder minimum selama level < 3
-		bool guaranteeFolder = level <= this->minimumFolderGuarantee ? true : false;
+		bool guaranteeFolder = level < 3 ? true : false;
 
 		for (int i = 0; i < childCount; i++) {
-			int random = rand() % 100;
-			if (random > 75 || guaranteeFolder)
+			if (randomize(100) > 75 || guaranteeFolder)
 			{
 				std::string folderName;
 				do {
 					folderName = FileSystem::get().getRandomFoldername();
 				} while (!Utils::isDistinct(dir, folderName));
 
-				Node* t = dir->addChild(new Directory(folderName, this));
+				Node* t = dir->addChild(new Directory(folderName));
 
 				t->setParent(now);
 				t->setLevel(level);
@@ -94,11 +96,11 @@ public:
 	DirectoryTree()
 	{
 		maxLevel = 10;
-		root = new Directory("root", this);
+		root = new Directory("root");
 	}
 
 	DirectoryTree(int maxLevel) : maxLevel(maxLevel) {
-		root = new Directory("root", this);
+		root = new Directory("root");
 	}
 
 	~DirectoryTree() {
@@ -115,11 +117,6 @@ public:
 
 	void setVirusCount(int c) {
 		this->virusCount = c;
-	}
-
-	void setMinimumVirusLevel(int n) {
-		this->minimumVirusLevel = n;
-		this->minimumFolderGuarantee = n;
 	}
 
 	void initializeTree()
@@ -169,30 +166,24 @@ public:
 	void initializeViruses(int count) {
 		std::stack<Node*> stack;
 		stack.push(getRoot());
-		Node* prevDir = nullptr;
 		while (!stack.empty()) {
 			Node* n = stack.top();
 			stack.pop();
-
 			if (n->checkType() != Type::Directory) {
 				continue;
 			}
 
 			Directory* d = n->as<Directory*>();
 
-			if (
-					rand() % 100 > 50 &&
-					count > 0 && 
-					d->getLevel() > this->minimumVirusLevel &&
-					prevDir != d
-				) {
+			if (binaryRandom() == 1 && count > 0 && d->getLevel() > 2) {
+				count--;
 				// Make new virus
 				std::string fileName;
 				do {
-					fileName = FileSystem::get().getRandomFilename() + "VIRUS";
+					fileName = FileSystem::get().getRandomFilename();
 				} while (!Utils::isDistinct(d, fileName));
 
-				virus* vrs = new virus(fileName, rand());
+				virus* vrs = new virus(fileName, this->virusCount - count);
 				// Add ke node
 				d->addChild(vrs);
 
@@ -201,9 +192,6 @@ public:
 
 				vrs->setParent(d);
 				vrs->setLevel(d->getLevel() + 1);
-				count--;
-
-				prevDir = d;
 			}
 
 			for (int i = 0; i < d->getChildren().size(); i++) {
@@ -211,14 +199,10 @@ public:
 					stack.push(d->getChildren()[i]);
 				}
 			}
-
-
 		}
 	}
 
 	std::vector<virus*>& getVirusesList() {
 		return viruses;
 	}
-
-	
 };

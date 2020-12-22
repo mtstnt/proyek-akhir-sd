@@ -53,6 +53,7 @@ public:
 			return "Not a directory!\n";
 		}
 
+		//Console::get().setColor(2);
 		std::cout << "Displaying the current directory: " << data.currentNode->getName() << "\n";
 		for (int i = 0; i < dir->getChildren().size(); i++)
 		{
@@ -166,7 +167,7 @@ public:
 	void parse(const std::string& params) override {
 		BaseCommand::parse(params);
 
-		if (this->params.size() <= 1) {
+		if (params.size() <= 1) {
 			response = "";
 			return;
 		}
@@ -181,8 +182,19 @@ public:
 				{
 					deleted_node_id = i;
 
-					node->as<Directory*>()
-						->deleteChild(children.at(deleted_node_id));
+					// Delete dari virus listnya GameState
+					if (children.at(i)->checkType() == Type::Virus) {
+						virus* v = children.at(i)->as<virus*>();
+						auto& ref = data.tree.getVirusesList();
+						for (int j = 0; j < ref.size(); j++) {
+							if (ref[j]->as<virus*>()->getID() == v->getID()) {
+								ref.erase(ref.begin() + j);
+								break;
+							}
+						}
+					}
+
+					node->as<Directory*>()->deleteChild(deleted_node_id); //asumsi bisa delete folder juga :)
 
 					response = "File deleted";
 					break;
@@ -205,6 +217,61 @@ public:
 	void parse(const std::string& params) override {
 		BaseCommand::parse(params);
 
-		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]";
+		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]\n\tquit\n\texit";
+	}
+};
+
+class Color : public BaseCommand
+{
+private:
+	std::string response;
+
+public:
+	Color(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		if (params == "color" || params == "COLOR" || params == "Color")
+		{
+			system("color 07");
+		}
+		else
+		{
+			const char* cmd = params.c_str();
+			system(cmd);
+		}
+
+		response = "";
+	}
+
+	std::string getResponse() override {
+		return response;
+	}
+};
+
+class DisplayInformation
+	: BaseCommand
+{
+public:
+	DisplayInformation(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]\n\tquit\n\texit";
+	}
+};
+
+class CLS : public BaseCommand
+{
+public:
+	CLS(GameInfo& data) : BaseCommand(data) {}
+
+	void parse(const std::string& params) override {
+		BaseCommand::parse(params);
+
+		system("cls");
+		response = "";
 	}
 };

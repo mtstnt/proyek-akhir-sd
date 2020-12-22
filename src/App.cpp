@@ -46,5 +46,6 @@ void App::run()
 		else {
 			m_data->machine.GetActiveState()->VUpdate(0);
 		}
+
 	}
 }

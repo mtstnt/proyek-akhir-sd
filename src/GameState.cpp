@@ -6,18 +6,21 @@
 
 FS::GameState::GameState(GameDataRef data) : m_data(data) {}
 
-FS::GameState::~GameState() {}
+FS::GameState::~GameState()
+{
+
+}
 
 void FS::GameState::VInit()
 {
+	system("CLS");
 	std::cout << "Starting Game...\n";
 	Sleep(300);
 
 	// Setup tree.
-	data.tree.setMaxLevel(7);
-	data.tree.setMaxElements(8);
-	data.tree.setVirusCount(3);
-	data.tree.setMinimumVirusLevel(3);
+	data.tree.setMaxLevel(5);
+	data.tree.setMaxElements(10);
+	data.tree.setVirusCount(2);
 	data.tree.initializeTree();
 
 	// Setup pathnya player. Disimpen di GameInfo
@@ -27,45 +30,40 @@ void FS::GameState::VInit()
 
 	// Setup tools.
 	data.tools["detector"] = new Tool_Detector(data);
-	//data.tools["isolate"] = new ToolIsolate(data);
+	// data.tools["isolate"] = new ToolIsolate(data);
 
-   // Bersihin stdin dari enter yang dari cinnya menu.
+	// Bersihin stdin dari enter yang dari cinnya menu.
 	getchar();
-
-	data.tree.dfs();
 }
 
 void FS::GameState::VUpdate(float dt)
 {
 	//Console::get().setColor(1);
+	// Prompt
+	std::cout << prompt << "\n";
+
+	if (data.tree.getVirusesList().size() == 0) {
+		std::cout << "SELAMAT! ANDA MENANG!\n";
+		VExit();
+	}
 
 	// Ask for input
 	writePath();
-	std::cout << " >";
+	std::cout << "$";
 
 	// Minta input
 	getline(std::cin, input);
 
 	// Biar cepet
-	if (input == "quit") {
+	if (input == "quit" || input == "Quit" || input == "QUIT" || input == "Exit" || input == "EXIT" || input == "exit") {
 		VExit();
-	}
-	else if (input == "dfs") {
-		data.tree.dfs();
-		std::cout << "\n";
 	}
 
 	// Parse input. Semua proses dia inputnya mau ngapain ada di CommandParser.
 	parser.parse(data, input);
 
 	// Response dari eksekusi command dari parser dikirimkan ke prompt.
-	std::cout << parser.response() << "\n";
-
-	if (data.tree.getVirusesList().size() == 0) {
-		std::cout << "SELAMAT! ANDA MENANG!\n";
-		VExit();
-		return;
-	}
+	prompt = parser.response();
 
 	updateVirus();
 	updateTools();
@@ -78,6 +76,7 @@ void FS::GameState::VPause() {}
 void FS::GameState::VExit()
 {
 	m_data->machine.RemoveState();
+	system("CLS");
 }
 
 void FS::GameState::writePath()
@@ -106,50 +105,19 @@ void FS::GameState::updateVirus()
 	for (virus* v : ref) {
 		if (v == nullptr) continue;
 
-		// Ambil parent dari setiap virus yang terdaftar di list
-		Directory* vParent = nullptr;
-		try {
-			vParent = v->getParent()->as<Directory*>();
-			if (vParent == nullptr) {
-				throw new exception("Opo iki");
-			}
-		}
-		catch (...) {
-			std::cout << "Error lol\n";
-			for (int x = 0; x < ref.size(); x++) {
-				if (ref[x] == v) {
-					ref.erase(ref.begin() + x);
-					break;
-				}
-			}
-			continue;
-		}
-
-		// Check apakah ada non-virus dlm dir yang sama
-		bool stillNeedToDelete = false;
-		for (Node* n : vParent->getChildren()) {
-			if (n->checkType() != Type::Virus && n != v) {
-				stillNeedToDelete = true;
-				break;
-			}
-		}
-
-		// Apabila semua non virus dlm directory itu sudah habis, 
-		//   pindah folder.
-		if (!stillNeedToDelete) {
+		Directory* vParent = v->getParent()->as<Directory*>();
+		
+		if (vParent->getChildren().size() == 1) {
 			if (vParent->getParent() != data.tree.getRoot()) {
+				vParent->deleteChild(v);
 				vParent->getParent()
 					->as<Directory*>()
 					->addChild(v);
 
-				for (int q = 0; q < vParent->getChildren().size(); q++) {
-					if (v == vParent->getChildren()[q]) {
-						vParent->getChildren().erase(vParent->getChildren().begin() + q);
-						break;
-					}
-				}
-
-				v->setParent(vParent->getParent());
+				if (vParent->getParent() != data.tree.getRoot())
+					v->setParent(vParent->getParent());
+				else
+					std::cout << "KALAH\n";
 			}
 			else {
 				std::cout << "ANDA KALAH!\n";

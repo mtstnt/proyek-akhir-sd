@@ -1,6 +1,6 @@
 #include "SettingState.h"
 
-FS::SettingState::SettingState(GameDataRef data) : m_data(data)
+FS::SettingState::SettingState(GameDataRef data): m_data(data)
 {
 }
 
@@ -10,10 +10,12 @@ FS::SettingState::~SettingState()
 
 void FS::SettingState::VInit()
 {
+	system("CLS");
 }
 
 void FS::SettingState::VUpdate(float dt)
 {
+	system("CLS");
 	if (audio == true)
 	{
 		std::cout << "Audio ON" << std::endl;
@@ -73,4 +75,5 @@ void FS::SettingState::VPause()
 void FS::SettingState::VExit()
 {
 	m_data->machine.RemoveState();
+	system("CLS");
 }

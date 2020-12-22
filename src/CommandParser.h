@@ -10,8 +10,6 @@ private:
 	std::unique_ptr<BaseCommand> command;
 
 public:
-	std::string CurKey;//will
-
 	CommandParser() = default;
 
 	void parse(GameInfo& info, std::string commands)
@@ -33,7 +31,7 @@ public:
 
 		// Coba param 1 kata aja dlu
 		std::string currentKeyword = parsingQueue.front();
-		CurKey = parsingQueue.front();//will
+
 		parsingQueue.pop();
 
 		// Checking
@@ -61,6 +59,16 @@ public:
 			command->parse(commands);
 			return;
 		}
+		if (currentKeyword == "color" || currentKeyword == "COLOR" || currentKeyword == "Color") {
+			command = std::make_unique<Color>(info);
+			command->parse(commands);
+			return;
+		}
+		if (currentKeyword == "cls" || currentKeyword == "CLS" || currentKeyword == "Cls") {
+			command = std::make_unique<CLS>(info);
+			command->parse(commands);
+			return;
+		}
 		//command = std::make_unique<NotFound>();
 
 	}
@@ -72,8 +80,5 @@ public:
 		return command->getResponse();
 	}
 
-	std::string getCommand() {
-		return CurKey;//will
-	}
 
 };

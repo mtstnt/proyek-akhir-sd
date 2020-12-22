@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <iostream>
 
 template <typename T>
@@ -18,7 +17,7 @@ private:
 	Node* tail = nullptr;
 public:
 	LinkedList() {}
-	~LinkedList()
+	~LinkedList() 
 	{
 		MassDelete(0, GetSize());
 	}
@@ -147,7 +146,7 @@ public:
 						break;
 
 					}
-
+					
 				}
 				else
 				{
@@ -192,7 +191,7 @@ public:
 			}
 			std::cout << std::endl;
 		}
-
+		
 	}
 	int GetSize()
 	{
@@ -319,7 +318,7 @@ public:
 				}
 			}
 		}
-
+		
 	}
 
 	void MassDelete(int index, int size)
@@ -342,3 +341,4 @@ public:
 		}
 	}
 };
+

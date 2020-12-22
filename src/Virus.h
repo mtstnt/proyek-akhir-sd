@@ -13,7 +13,7 @@ protected:
 
 public:
 	virus();
-	virus(std::string name, int ID) : Node(name), id(ID) { }
+	virus(std::string name, int ID) : Node(name) { }
 
 	Type checkType() override {
 		return Type::Virus;

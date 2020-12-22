@@ -23,3 +23,7 @@
 inline bool binaryRandom() {
 	return rand() % 2;
 }
+
+inline int randomize(int total) {
+	return rand() % total;
+}
