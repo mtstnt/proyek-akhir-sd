@@ -10,9 +10,11 @@ class DirectoryTree
 {
 private:
 	Directory* root;
-	int maxLevel;
+	int maxLevel = 8;
 	int maxElements = 5;
 	int virusCount = 2;
+	int minimumVirusLevel = 2;
+	int minimumFolderGuarantee = 5;
 
 	std::vector<virus*> viruses;
 
@@ -29,7 +31,7 @@ private:
 		int childCount = rand() % (maxElements)+1;
 
 		// Memastikan ada 1 folder minimum selama level < 3
-		bool guaranteeFolder = level < 3 ? true : false;
+		bool guaranteeFolder = level <= this->minimumFolderGuarantee ? true : false;
 
 		for (int i = 0; i < childCount; i++) {
 			int random = rand() % 100;
@@ -115,6 +117,11 @@ public:
 		this->virusCount = c;
 	}
 
+	void setMinimumVirusLevel(int n) {
+		this->minimumVirusLevel = n;
+		this->minimumFolderGuarantee = n;
+	}
+
 	void initializeTree()
 	{
 		FileSystem::get().loadRandomFiles();
@@ -173,8 +180,12 @@ public:
 
 			Directory* d = n->as<Directory*>();
 
-			if (rand() % 100 > 50 && count > 0 && d->getLevel() > 3 &&
-				prevDir != d) {
+			if (
+				rand() % 100 > 50 &&
+				count > 0 && 
+				d->getLevel() > this->minimumVirusLevel &&
+				prevDir != d
+				) {
 				// Make new virus
 				std::string fileName;
 				do {
@@ -208,4 +219,6 @@ public:
 	std::vector<virus*>& getVirusesList() {
 		return viruses;
 	}
+
+	
 };

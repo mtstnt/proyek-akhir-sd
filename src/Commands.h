@@ -26,7 +26,6 @@ public:
 	
 	virtual void parse(const std::string& paramString) 
 	{
-		// Bug here
 		params = Utils::split(paramString);
 	}
 
@@ -54,7 +53,6 @@ public:
 			return "Not a directory!\n";
 		}
 
-		//Console::get().setColor(2);
 		std::cout << "Displaying the current directory: " << data.currentNode->getName() << "\n";
 		for (int i = 0; i < dir->getChildren().size(); i++)
 		{
@@ -203,21 +201,6 @@ class Help : public BaseCommand
 {
 public:
 	Help(GameInfo& data) : BaseCommand(data) {}
-
-	void parse(const std::string& params) override {
-		BaseCommand::parse(params);
-
-		response = "List of commands: \n\tcd [DIR]\n\tls\n\ttools [TOOLS]\n\trm [FILE]";
-	}
-};
-
-// Sek ngko iki
-// Buat display informasi file (?)
-class DisplayInformation
-	: BaseCommand
-{
-public:
-	DisplayInformation(GameInfo& data) : BaseCommand(data) {}
 
 	void parse(const std::string& params) override {
 		BaseCommand::parse(params);

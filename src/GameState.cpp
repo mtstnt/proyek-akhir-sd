@@ -6,10 +6,7 @@
 
 FS::GameState::GameState(GameDataRef data) : m_data(data) {}
 
-FS::GameState::~GameState()
-{
-
-}
+FS::GameState::~GameState() {}
 
 void FS::GameState::VInit()
 {
@@ -17,9 +14,10 @@ void FS::GameState::VInit()
 	Sleep(300);
 
 	// Setup tree.
-	data.tree.setMaxLevel(5);
-	data.tree.setMaxElements(10);
-	data.tree.setVirusCount(2);
+	data.tree.setMaxLevel(7);
+	data.tree.setMaxElements(8);
+	data.tree.setVirusCount(3);
+	data.tree.setMinimumVirusLevel(3);
 	data.tree.initializeTree();
 
 	// Setup pathnya player. Disimpen di GameInfo
