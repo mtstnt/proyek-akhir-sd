@@ -14,7 +14,7 @@ void virus::deleteFile() {//manggil deleteChild()
 		return;
 	}
 	
-	auto sibling = this->getParent()->as<Directory*>()->getChildren();
+	auto& sibling = this->getParent()->as<Directory*>()->getChildren();
 
 	// Jangan sampai delete diri sendiri
 	int random;

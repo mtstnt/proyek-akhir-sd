@@ -27,9 +27,9 @@ void FS::GameState::VInit()
 
 	// Setup tools.
 	data.tools["detector"] = new Tool_Detector(data);
-	 //data.tools["isolate"] = new ToolIsolate(data);
+	//data.tools["isolate"] = new ToolIsolate(data);
 
-	// Bersihin stdin dari enter yang dari cinnya menu.
+   // Bersihin stdin dari enter yang dari cinnya menu.
 	getchar();
 
 	data.tree.dfs();
@@ -107,7 +107,23 @@ void FS::GameState::updateVirus()
 		if (v == nullptr) continue;
 
 		// Ambil parent dari setiap virus yang terdaftar di list
-		Directory* vParent = v->getParent()->as<Directory*>();
+		Directory* vParent = nullptr;
+		try {
+			vParent = v->getParent()->as<Directory*>();
+			if (vParent == nullptr) {
+				throw new exception("Opo iki");
+			}
+		}
+		catch (...) {
+			std::cout << "Error lol\n";
+			for (int x = 0; x < ref.size(); x++) {
+				if (ref[x] == v) {
+					ref.erase(ref.begin() + x);
+					break;
+				}
+			}
+			continue;
+		}
 
 		// Check apakah ada non-virus dlm dir yang sama
 		bool stillNeedToDelete = false;

@@ -5,6 +5,7 @@ void Directory::deleteChild(Node * node)
 {
 	for (int i = 0; i < children.size(); i++) {
 		if (children[i] == node) {
+			std::cout << children[i]->getName() << "\n";
 			if (children[i]->checkType() == Type::Directory) {
 				Directory* childAsDir = children[i]->as<Directory*>();
 				for (int j = 0; j < childAsDir->getChildren().size(); j++) {
@@ -14,19 +15,11 @@ void Directory::deleteChild(Node * node)
 			else if (children[i]->checkType() == Type::Virus) {
 				auto& ref = treeRef->getVirusesList();
 
-				/*std::cout << "Virus: ";
-				std::cout << children[i]->getName() << " ";
-				std::cout << children[i]->as<virus*>()->getID() << std::endl;
-
-				std::cout << "Virus List: ";
-				for (auto* f : ref) {
-					std::cout << f->getID() << " ";
-				}
-				std::cout << std::endl;*/
+				std::cout << "Virus: " << children[i]->getName() << " " << children[i]->as<virus*>()->getID() << std::endl;
 
 				bool found = false;
 				for (int j = 0; j < ref.size(); j++) {
-					if (ref[j]->getID() == node->as<virus*>()->getID()) {
+					if (ref[j]->getID() == children[i]->as<virus*>()->getID()) {
 						ref.erase(ref.begin() + j);
 						found = true;
 						break;
@@ -38,7 +31,6 @@ void Directory::deleteChild(Node * node)
 			}
 			delete children[i];
 			children.erase(children.begin() + i);
-			return;
 		}
 	}
 }
