@@ -4,6 +4,8 @@
 
 // Class utk ngatur warna console, ukuran console, posisi cursor, dll.
 // Ditambahi nanti ae.
+
+// Sedih, gk dipake
 class Console 
 {
 private:

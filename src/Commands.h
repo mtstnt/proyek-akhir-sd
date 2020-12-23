@@ -114,8 +114,22 @@ public:
 				return;
 			}
 
-			data.currentNode = next;
-			data.currentPath.push(next->getName());
+			bool stay = false;
+			for (auto& i : next->as<Directory*>()->getChildren())
+			{
+				if (i->checkType() != Type::Virus) {
+					stay = true;
+					break;
+				}
+			}
+
+			if (stay) {
+				data.currentNode = next;
+				data.currentPath.push(next->getName());
+			}
+			else {
+				std::cout << "Cannot enter a deletable directory!\n";
+			}
 		}
 	}
 };
@@ -181,10 +195,15 @@ public:
 				{
 					deleted_node_id = i;
 
+					if (children.at(deleted_node_id)->checkType() == Type::Directory) {
+						response = "Cannot delete a directory!\n";
+						return;
+					}
+
 					node->as<Directory*>()
 						->deleteChild(children.at(deleted_node_id));
 
-					response = "File deleted";
+					response = "File deleted!\n";
 					break;
 				}
 			}

@@ -4,6 +4,7 @@
 #include "CommandParser.h"
 #include "GameInfo.h"
 #include "Virus.h"
+#include "CommandHistory.h"
 
 namespace FS
 {
@@ -24,8 +25,10 @@ namespace FS
 		std::string input;
 
 		// Max turn, apakah game sudah selesai atau belum
-		int max_turn;
 		bool is_over = false;
+
+		CmdH command_history;
+		int turn = 0;
 
 	public:
 		GameState(GameDataRef data);
@@ -42,5 +45,7 @@ namespace FS
 
 		void updateTools();
 		void updateVirus();
+
+		void verifyCurrentNode();
 	};
 }

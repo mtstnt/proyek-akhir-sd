@@ -1,5 +1,5 @@
 #pragma once
-#include "CommandParser.h"
+#include "Includes.h"
 
 class node {
 public:
@@ -8,11 +8,10 @@ public:
 };
 
 class CmdH : public node {
-	CommandParser CP;
 	node* head, * cur;
 public:
 	CmdH();
-	void addLog(); 
+	void addLog(std::string cmd); 
 	void DisplayLog();
 };
 

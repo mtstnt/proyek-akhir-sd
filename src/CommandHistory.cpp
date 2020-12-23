@@ -5,25 +5,27 @@ CmdH::CmdH() {
 	cur = NULL;
 }
 
-void CmdH::addLog() {
+void CmdH::addLog(std::string cmd) {
 	node* tmp = new node();
-	tmp->log = CP.getCommand();
+	tmp->log = cmd;
 	tmp->next = NULL;
 	if (head == NULL) {
 		head = tmp;
 		cur = tmp;
 	}
 	else {
+		cur->next = tmp;
 		cur = tmp;
-		cur = cur->next;
 	}
 }
 
 void CmdH::DisplayLog() {
-	cur = head;
+	node* c = head;
 	std::cout << "Command Log History\n";
-	while (cur->next != NULL) {
-		std::cout << cur->log << "\n";
-		cur = cur->next;
+	int i = 1;
+	while (c != NULL) {
+		std::cout << i << ". " <<  c->log << "\n";
+		c = c->next;
+		i++;
 	}
 }

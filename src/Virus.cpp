@@ -1,3 +1,4 @@
+#include "Includes.h"
 #include "Virus.h"
 
 // parent virus
@@ -55,30 +56,32 @@ void virus::deleteFile() {//manggil deleteChild()
 		this->setParent(found_directory);
 	}
 	break;
-	case Type::Virus:
-		// Hehe
-	break;
-
+	case Type::Virus: break;
 	default: 
+		// Shouldnt be here
 		assert(0);
 		break;
 	}
 }
 
 void virus::updateVirus() {
-	/*int random = rand() % 2;
+	int random = rand() % 5;
 	switch (random)
 	{
 	case 0:
+	case 1:
+	case 3:
+	case 4:
 		deleteFile();
 		break;
-	case 1:
+	case 2:
 		changeName();
 		break;
 	default:
+		// Shouldnt be here
+		assert(0);
 		break;
-	}*/
-	deleteFile();
+	}
 }
 
 void virus::changeName() {
@@ -88,8 +91,4 @@ void virus::changeName() {
 	int offset = rand() % (length - panjang_string_baru);
 	string substring = bahan.substr(offset, panjang_string_baru);
 	this->name = substring + ".exe";
-}
-
-void virus::changeFilename()
-{
 }

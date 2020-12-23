@@ -17,16 +17,16 @@ void FS::SettingState::VUpdate(float dt)
 {
 	system("cls");
 
-	if (audio == true)
+	if (m_data->musicPlayer.get_status())
 	{
 		std::cout << "Audio ON" << std::endl;
 	}
-	else
+	else if (!m_data->musicPlayer.get_status())
 	{
 		std::cout << "Audio OFF" << std::endl;
 	}
 
-	if (audio == true)
+	if (m_data->musicPlayer.get_status())
 	{
 		m_data->musicPlayer.display();
 		std::cout << "Change Track: " << std::endl;
@@ -39,7 +39,7 @@ void FS::SettingState::VUpdate(float dt)
 		}
 		else if (input == "OFF" || input == "off" || input == "Off")
 		{
-			audio = false;
+			m_data->musicPlayer.set_status(false);
 			m_data->musicPlayer.stop();
 		}
 		else
@@ -58,7 +58,7 @@ void FS::SettingState::VUpdate(float dt)
 		}
 		else if (input == "ON" || input == "on" || input == "On")
 		{
-			audio = true;
+			m_data->musicPlayer.set_status(true);
 			m_data->musicPlayer.ChangeTrack("0");
 			m_data->musicPlayer.play();
 		}

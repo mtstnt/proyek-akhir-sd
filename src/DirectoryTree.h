@@ -102,7 +102,22 @@ public:
 	}
 
 	~DirectoryTree() {
+		std::stack<Node*> dir_stack;
+		dir_stack.push(root);
+		while (!dir_stack.empty()) {
+			Node* current_node = dir_stack.top();
+			dir_stack.pop();
 
+			if (current_node->checkType() == Type::Directory) {
+				Directory* current_node_as_dir = current_node->as<Directory*>();
+				for (int i = 0; i < current_node_as_dir->getChildren().size(); i++) {
+					dir_stack.push(current_node_as_dir->getChildren()[i]);
+				}
+				current_node_as_dir->getChildren().clear();
+			}
+
+			delete current_node;
+		}
 	}
 
 	void setMaxElements(int size) {

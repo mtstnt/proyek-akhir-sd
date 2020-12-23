@@ -8,7 +8,7 @@ namespace FS
 	{
 	private:
 		GameDataRef m_data;
-		bool audio = true;
+
 	public:
 		SettingState(GameDataRef data);
 		~SettingState();

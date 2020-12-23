@@ -43,7 +43,7 @@ void FS::MainMenuState::VExit()
 
 void FS::MainMenuState::GameTitle()
 {
-	std::cout << FileSystem::get().readFile("files/Title.txt", true, true) << std::endl;
+	std::cout << FileSystem::get().readFile("files/Title.txt", true, false) << std::endl;
 }
 
 void FS::MainMenuState::GameMenu()

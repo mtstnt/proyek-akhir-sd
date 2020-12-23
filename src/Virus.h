@@ -23,7 +23,6 @@ public:
 	virtual void deleteFile();
 	void updateVirus();
 	void changeName();
-	void changeFilename();
 
 	int getID() { return id; }
 };

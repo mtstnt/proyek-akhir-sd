@@ -44,7 +44,7 @@ public:
 			nd.pop();
 			if (n->checkType() != Type::Directory) {
 				if (n->checkType() == Type::Virus) {
-					this->response = "Found a virus! Location: " + getCurrentPath(n) + "\n";
+					this->response = "Found a virus! Location: " + getCurrentPath(n->getParent()) + "\n";
 					this->cooldown = MAX_COOLDOWN;
 					return;
 				}

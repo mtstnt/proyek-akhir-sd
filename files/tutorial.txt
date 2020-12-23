@@ -1,0 +1,8 @@
+Type words in the command line to execute them!
+You have to delete all viruses inside the system before they reach your root folder!
+You also have to do it before the turns run out!
+You will be given tools to help you! Type "?" to see them and experiment with it!
+Available tools: 
+	- Detector => To detect a virus' location in your system!
+
+Are you ready?
