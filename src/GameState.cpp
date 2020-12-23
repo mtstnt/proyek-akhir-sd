@@ -35,22 +35,37 @@ void FS::GameState::VInit()
 
 	// Bersihin stdin dari enter yang dari cinnya menu.
 	getchar();
-	
-	// Debug view all tools
-	// data.tree.dfs();
 }
 
 void FS::GameState::VUpdate(float dt)
 {
-	if (data.tree.getVirusesList().size() == 0) {
-		std::cout << "SELAMAT! ANDA MENANG!\n";
+	// Win akibat semua virus sudah mati
+	if (turn > 0 && data.tree.getVirusesList().size() == 0) {
+		std::cout << "YOU WIN!\n";
+		_getch();
+		VExit();
+		return;
+	}
+	else if (turn == 0 && data.tree.getVirusesList().size() == 0) {
+		std::cout << "You're lucky! The viruses decided not to come today!\n";
+		std::cout << "Please try playing a new game!\n";
+		_getch();
 		VExit();
 		return;
 	}
 
+	// Lose akibat turn habis
+	if (turn > MAX_TURN) {
+		std::cout << "YOU RAN OUT OF TURNS!\n";
+		_getch();
+		VExit();
+		return;
+	}
+
+	// Check apakah kita ada di node yang "illegal" (size childnya 0 atau tinggal virus aja)
 	verifyCurrentNode();
 
-	// Ask for input
+	// Tulis path ke current node (kyk di cmd)
 	writePath();
 	std::cout << " >";
 
@@ -80,6 +95,7 @@ void FS::GameState::VUpdate(float dt)
 	}
 
 	updateVirus();
+
 	updateTools();
 
 	if (is_over) {
@@ -88,7 +104,7 @@ void FS::GameState::VUpdate(float dt)
 	}
 
 	turn++;
-	printf("Turn: %d\n", turn);
+	printf("Turn: %d/%d\n", turn, MAX_TURN);
 }
 
 void FS::GameState::VResume() {}

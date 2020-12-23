@@ -26,6 +26,7 @@ namespace FS
 
 		// Max turn, apakah game sudah selesai atau belum
 		bool is_over = false;
+		const int MAX_TURN = 50;
 
 		CmdH command_history;
 		int turn = 0;

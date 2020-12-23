@@ -5,7 +5,7 @@ void Directory::deleteChild(Node * node)
 {
 	for (int i = 0; i < children.size(); i++) {
 		if (children[i] == node) {
-			std::cout << children[i]->getName() << "\n";
+			std::cout << "A file has been deleted somewhere!\n";
 			if (children[i]->checkType() == Type::Virus) {
 				auto& ref = treeRef->getVirusesList();
 
@@ -18,6 +18,7 @@ void Directory::deleteChild(Node * node)
 					}
 				}
 				if (!found) {
+					// Shouldnt be here
 					std::cout << "Not found!\n";
 				}
 			}
